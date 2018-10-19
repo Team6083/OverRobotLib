@@ -1,6 +1,5 @@
 package org.team6083;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 
 public class DriveBase {
@@ -12,9 +11,20 @@ public class DriveBase {
 		rightMotor1 = right1;
 		rightMotor2 = right2;
 	}
-	
-	public void tankDrive() {
-		
+
+	// Let them override this
+	public void tankDrive(){
+		leftMotor1.set(0);
+		rightMotor1.set(0);
+		leftMotor2.set(0);
+		rightMotor2.set(0);
+	}
+
+	public void directControl(double leftSpeed, double rightSpeed) {
+        leftMotor1.set(leftSpeed);
+        leftMotor2.set(leftSpeed);
+        rightMotor1.set(rightSpeed);
+        rightMotor2.set(rightSpeed);
 	}
 
 
