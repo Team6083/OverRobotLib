@@ -6,11 +6,16 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashBoard {
-
     private static boolean init = false;
     private static boolean runLoop = true;
 
-    public void init() {
+    private String partName;
+
+    public DashBoard(String name){
+        partName = name;
+    }
+
+    public static void init() {
         if (!init) {
             new Thread(() -> {
                 Thread.currentThread().setName("DashboardLooper");
@@ -28,16 +33,20 @@ public class DashBoard {
         }
     }
 
-    public static void putReady(String name) {
-        SmartDashboard.putNumber(name + "/status", 0);
+    public static void stopLoop(){
+        runLoop = false;
     }
 
-    public static void putWarning(String name) {
-        SmartDashboard.putNumber(name + "/status", 1);
+    public void putReady() {
+        SmartDashboard.putNumber(partName + "/status", 0);
     }
 
-    public static void putError(String name) {
-        SmartDashboard.putNumber(name + "/status", 2);
+    public void putWarning() {
+        SmartDashboard.putNumber(partName + "/status", 1);
+    }
+
+    public void putError() {
+        SmartDashboard.putNumber(partName + "/status", 2);
     }
 
     private static void dashboardLoop() {
