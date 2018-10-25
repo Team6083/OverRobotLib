@@ -1,20 +1,27 @@
 package org.team6083.util;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashBoard {
+
     private static boolean init = false;
     private static boolean runLoop = true;
 
     private String partName;
 
-    public DashBoard(String name){
+    /**
+     * Construct a DashBoard.
+     *
+     * @param name part name
+     */
+    public DashBoard(String name) {
         partName = name;
     }
 
+    /**
+     * Initialize DashBoard, only need to run on time once the robot start.
+     */
     public static void init() {
         if (!init) {
             new Thread(() -> {
@@ -33,18 +40,30 @@ public class DashBoard {
         }
     }
 
-    public static void stopLoop(){
+    /**
+     * Use to stop the DashBoard loop.
+     */
+    public static void stopLoop() {
         runLoop = false;
     }
 
+    /**
+     * Mark part ready.
+     */
     public void putReady() {
         SmartDashboard.putNumber(partName + "/status", 0);
     }
 
+    /**
+     * Mark part warning.
+     */
     public void putWarning() {
         SmartDashboard.putNumber(partName + "/status", 1);
     }
 
+    /**
+     * Mark part error.
+     */
     public void putError() {
         SmartDashboard.putNumber(partName + "/status", 2);
     }
