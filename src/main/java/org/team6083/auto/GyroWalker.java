@@ -1,5 +1,6 @@
 package org.team6083.auto;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class GyroWalker {
@@ -10,18 +11,28 @@ public class GyroWalker {
     private double targetAngle;
 
     private double leftPower, rightPower;
-    private double gain;
+    private double kP;
+    private double kI;
     private double maxPower;
     private double maxEdit;
+
+    private Timer calculateTimer;
+    private double kI_result = 0;
 
     public GyroWalker(Gyro gyro) {
         this.gyro = gyro;
         leftPower = 0;
         rightPower = 0;
         targetAngle = 0;
-        gain = 0.005;
-        maxPower = 0.6;
-        maxEdit = 0.2;
+
+        kP = 0.01;
+        kI = 0.000001;
+
+        maxPower = 0.7;
+        maxEdit = 0.5;
+        calculateTimer = new Timer();
+
+        resetTimer();
     }
 
     public void calculate(double leftSetPower, double rightSetPower) {
@@ -41,16 +52,22 @@ public class GyroWalker {
         errorAngle = targetAngle - angle;
         //calculate the difference between target angle and current angle
 
+        double nowtime = calculateTimer.get();
+        kI_result += nowtime * errorAngle;
+
         double editPower = 0;
 
         if(Math.abs(errorAngle) < 20) {
             //make robot still move if the errorAngle is too small
-            editPower = errorAngle * gain * (20 - errorAngle)/20 * 10;
+            editPower = errorAngle * kP * (20 - errorAngle)/20 * 10;
         }
         else {
-            editPower =  errorAngle * gain;
+            editPower =  errorAngle * kP;
         }
-        //calculate output diff
+        //calculate output diff with kP
+
+        editPower += kI* kI_result;
+        //calculate output diff with kI
 
         if(editPower>maxEdit) {
             editPower = (editPower > 0)?maxEdit:-maxEdit;
@@ -82,6 +99,14 @@ public class GyroWalker {
 
     public void setTargetAngle(double angle) {
         targetAngle = angle;
+        resetTimer();
+    }
+
+    private void resetTimer(){
+        kI_result = 0;
+        calculateTimer.stop();
+        calculateTimer.reset();
+        calculateTimer.start();
     }
 
     public static double translateAngle(double sourceAngle) {
@@ -92,15 +117,33 @@ public class GyroWalker {
         return angle;
     }
 
-    public void setGain(double gain) {
-        this.gain = gain;
+    public void setkP(double kP) {
+        this.kP = kP;
     }
+
+    public void setkI(double kI) {
+        this.kI = kI;
+    }
+
+    public double getkP(){
+        return kP;
+    }
+
+    public double getkI(){
+        return kI;
+    }
+
+    public double getkI_result(){
+        return kI_result;
+    }
+
+    // calculate process
 
     public void setMaxPower(double power) {
         maxPower = power;
     }
 
-    public double getcurrentSourceAngle() {
+    public double getCurrentSourceAngle() {
         return currentSourceAngle;
     }
 
@@ -123,4 +166,8 @@ public class GyroWalker {
     public double getTargetAngle() {
         return targetAngle;
     }
+
+    // final result
+
+
 }
