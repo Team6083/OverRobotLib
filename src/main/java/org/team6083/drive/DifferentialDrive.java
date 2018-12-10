@@ -2,6 +2,7 @@ package org.team6083.drive;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.team6083.util.Joysticks;
 
 
 /**
@@ -56,6 +57,19 @@ public class DifferentialDrive {
         rightMotor2.set(rightSpeed);
 
         dashboard(leftSpeed,rightSpeed);
+    }
+
+    public void tankDrive(){
+        double left = -Joysticks.ly / speedDown;
+        double right = Joysticks.ry / speedDown;
+
+        if (Joysticks.lab) {
+            left = left * 2;
+        }
+        if (Joysticks.rab) {
+            right = right * 2;
+        }
+        directControl(left,right);
     }
 
     /**
