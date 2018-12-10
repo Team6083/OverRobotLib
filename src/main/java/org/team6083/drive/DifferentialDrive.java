@@ -26,7 +26,7 @@ public class DifferentialDrive {
     }
 
     /**
-     * Stop the drive
+     * Stop the driv e
      */
     public void stop() {
         leftMotor1.set(0);
