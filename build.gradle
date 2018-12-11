@@ -10,10 +10,10 @@ plugins {
     id 'eclipse'
     id 'idea'
     id "jaci.openrio.gradle.GradleRIO" version "2018.03.06"
-    id 'maven-publish'
-    id 'maven'
-    id 'signing'
 }
+
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 dependencies {
     compile wpilib()
@@ -59,7 +59,7 @@ artifacts {
     archives javadocJar
 }
 
-signing {
+signing{
     sign configurations.archives
 }
 
