@@ -68,6 +68,18 @@ public class DashBoard {
         SmartDashboard.putNumber(partName + "/status", 2);
     }
 
+    public void putLeftDis(double leftDis) {
+        SmartDashboard.putNumber("Left Dis", leftDis);
+    }
+
+    public void putRightDis(double rightDis) {
+        SmartDashboard.putNumber("Right Dis", rightDis);
+    }
+
+    public static void putGyroAngle(double angle) {
+        SmartDashboard.putNumber("Gyro/angle", angle);
+    }
+
     private static void dashboardLoop() {
         DriverStation ds = DriverStation.getInstance();
 
