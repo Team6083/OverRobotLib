@@ -5,13 +5,14 @@ import org.team6083.util.DashBoard;
 
 public class RobotPower {
     private static PowerDistributionPanel pdp;
-    private static final int PDP_CANID = 1;
+    private static int PDP_CANID = 1;
     private static boolean inited = false;
 
     private int devicePort;
 
-    public static void init() {
+    public static void init(int pdp_CANId) {
         if(!inited) {
+            PDP_CANID = pdp_CANId;
             pdp = new PowerDistributionPanel(PDP_CANID);
         }
     }
@@ -30,6 +31,10 @@ public class RobotPower {
 
     public static double getTotalCurrent() {
         return pdp.getTotalCurrent();
+    }
+
+    public static double getRobotVoltage() {
+        return pdp.getVoltage();
     }
 
 }
