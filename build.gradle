@@ -10,8 +10,10 @@ plugins {
     id 'eclipse'
     id 'idea'
     id "jaci.openrio.gradle.GradleRIO" version "2018.03.06"
-    id 'maven-publish'
 }
+
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 dependencies {
     compile wpilib()
@@ -38,15 +40,132 @@ jar {
     }
 }
 
-group = 'org.team6083'
+group = 'com.github.team6083'
 version = '0.1.0-alpha'
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
+task sourceJar(type: Jar) {
+    classifier "sources"
     from sourceSets.main.allJava
 }
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
     from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
+}
+
+signing{
+    sign configurations.archives
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            customizePom(pom)
+            groupId project.group
+            artifactId project.name
+            version project.version
+
+            from components.java
+
+            // create the sign pom artifact
+            pom.withXml {
+                def pomFile = file("${project.buildDir}/generated-pom.xml")
+                writeTo(pomFile)
+                def pomAscFile = signing.sign(pomFile).signatureFiles[0]
+                artifact(pomAscFile) {
+                    classifier = null
+                    extension = 'pom.asc'
+                }
+            }
+
+            artifact(sourceJar) {
+                classifier = 'sources'
+            }
+            artifact(javadocJar) {
+                classifier = 'javadoc'
+            }
+
+            // create the signed artifacts
+            project.tasks.signArchives.signatureFiles.each {
+                artifact(it) {
+                    def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
+                    if (matcher.find()) {
+                        classifier = matcher.group(1)
+                    } else {
+                        classifier = null
+                    }
+                    extension = 'jar.asc'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url ""
+            credentials {
+                username sonatypeUsername
+                password sonatypePassword
+            }
+        }
+    }
+}
+
+def customizePom(pom) {
+    pom.withXml {
+        def root = asNode()
+
+        // eliminate test-scoped dependencies (no need in maven central POMs)
+        root.dependencies.removeAll { dep ->
+            dep.scope == "test"
+        }
+
+        // add all items necessary for maven central publication
+        root.children().last() + {
+            resolveStrategy = Closure.DELEGATE_FIRST
+
+            description 'A custom lib for Overlooking robots'
+            name 'OverRobotLib'
+            url 'https://github.com/Team6083/OverRobotLib'
+
+            organization {
+                name 'com.github.team6083'
+                url 'https://github.com/Team6083'
+            }
+
+            issueManagement {
+                system 'GitHub'
+                url 'https://github.com/Team6083/OverRobotLib/issues'
+            }
+
+            scm {
+                url 'git@github.com:Team6083/OverRobotLib.git'
+                connection 'scm:git:git@github.com:Team6083/OverRobotLib.git'
+                developerConnection 'scm:git:git@github.com:Team6083/OverRobotLib.git'
+            }
+
+            developers {
+                developer {
+                    name 'KennHuang'
+                }
+            }
+        }
+    }
+}
+
+model {
+    tasks.generatePomFileForMavenJavaPublication {
+        destination = file("$buildDir/generated-pom.xml")
+    }
+    tasks.publishMavenJavaPublicationToMavenLocal {
+        dependsOn project.tasks.signArchives
+    }
+    tasks.publishMavenJavaPublicationToMavenRepository {
+        dependsOn project.tasks.signArchives
+    }
 }

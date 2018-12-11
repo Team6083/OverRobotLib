@@ -25,8 +25,8 @@ public class GyroWalker {
         rightPower = 0;
         targetAngle = 0;
 
-        kP = 0.01;
-        kI = 0.000001;
+        kP = 0.005;
+        kI = 10E-6;
 
         maxPower = 0.7;
         maxEdit = 0.5;
