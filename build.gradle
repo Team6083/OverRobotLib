@@ -11,6 +11,7 @@ plugins {
     id 'idea'
     id "jaci.openrio.gradle.GradleRIO" version "2018.03.06"
     id 'maven-publish'
+    id 'maven'
 }
 
 dependencies {
@@ -38,7 +39,7 @@ jar {
     }
 }
 
-group = 'org.team6083'
+group = 'com.github.team6083'
 version = '0.1.0-alpha'
 
 task sourcesJar(type: Jar) {
@@ -49,4 +50,46 @@ task sourcesJar(type: Jar) {
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
     from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+task createPom {
+    pom {
+        project {
+            groupId project.group
+            artifactId project.name
+            version project.version
+
+            description 'A custom lib for Overlooking robots'
+            name 'OverRobotLib'
+            url 'https://github.com/Team6083/OverRobotLib'
+
+            organization {
+                name 'com.github.team6083'
+                url 'https://github.com/Team6083'
+            }
+
+            issueManagement {
+                system 'GitHub'
+                url 'https://github.com/Team6083/OverRobotLib/issues'
+            }
+
+            scm {
+                url 'git@github.com:Team6083/OverRobotLib.git'
+                connection 'scm:git:git@github.com:Team6083/OverRobotLib.git'
+                developerConnection 'scm:git:git@github.com:Team6083/OverRobotLib.git'
+            }
+
+            developers {
+                developer {
+                    name 'KennHuang'
+                }
+            }
+        }
+    }.writeTo("pom.xml")
 }
