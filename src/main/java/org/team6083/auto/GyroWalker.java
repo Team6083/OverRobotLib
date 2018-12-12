@@ -3,6 +3,12 @@ package org.team6083.auto;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
+
+/**
+ * Correcting the heading of the drive with gyroscope
+ * @author Alex-Lai, Kenn Huang
+ * @since 0.1.0-alpha
+ */
 public class GyroWalker {
     Gyro gyro;
 
@@ -19,22 +25,37 @@ public class GyroWalker {
     private Timer calculateTimer;
     private double kI_result = 0;
 
+    private double smallAngleAdd;
+    private double smallAngle;
+
+    /**
+     * Construct a GyroWalker
+     * @param gyro the gyroscope that used to correction the heading
+     */
     public GyroWalker(Gyro gyro) {
         this.gyro = gyro;
         leftPower = 0;
         rightPower = 0;
         targetAngle = 0;
 
-        kP = 0.005;
-        kI = 10E-6;
+        kP = 0.025;
+        kI = 0.01;
 
         maxPower = 0.7;
         maxEdit = 0.5;
         calculateTimer = new Timer();
 
+        smallAngle = 0;
+        smallAngleAdd = 10;
+
         resetTimer();
     }
 
+    /**
+     *
+     * @param leftSetPower original power of left
+     * @param rightSetPower
+     */
     public void calculate(double leftSetPower, double rightSetPower) {
         currentSourceAngle = gyro.getAngle();
         currentAngle = translateAngle(currentSourceAngle);
@@ -44,7 +65,7 @@ public class GyroWalker {
             angle = angle - 360;
         }
 
-        if(Math.abs(targetAngle)>160) {
+        if(Math.abs(targetAngle)>140) {
             angle = currentAngle;
         }
         //translate angle to -180~180
@@ -57,9 +78,9 @@ public class GyroWalker {
 
         double editPower = 0;
 
-        if(Math.abs(errorAngle) < 20) {
+        if(Math.abs(errorAngle) < smallAngle) {
             //make robot still move if the errorAngle is too small
-            editPower = errorAngle * kP * (20 - errorAngle)/20 * 10;
+            editPower = errorAngle * kP * (smallAngle - errorAngle)/smallAngle * smallAngleAdd;
         }
         else {
             editPower =  errorAngle * kP;
@@ -169,5 +190,20 @@ public class GyroWalker {
 
     // final result
 
+    public double getSmallAngleAdd(){
+        return smallAngleAdd;
+    }
+
+    public double getSmallAngle(){
+        return smallAngle;
+    }
+
+    public void setSmallAngleAdd(double smallAngleAdd){
+        this.smallAngleAdd = smallAngleAdd;
+    }
+
+    public void setSmallAngle(double smallAngle){
+        this.smallAngle = smallAngle;
+    }
 
 }
