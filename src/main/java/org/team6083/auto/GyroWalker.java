@@ -25,12 +25,15 @@ public class GyroWalker {
         rightPower = 0;
         targetAngle = 0;
 
-        kP = 0.005;
-        kI = 10E-6;
+        kP = 0.025;
+        kI = 0.01;
 
         maxPower = 0.7;
         maxEdit = 0.5;
         calculateTimer = new Timer();
+
+        smallAngle = 0;
+        smallAngleAdd = 10;
 
         resetTimer();
     }
@@ -44,7 +47,7 @@ public class GyroWalker {
             angle = angle - 360;
         }
 
-        if(Math.abs(targetAngle)>160) {
+        if(Math.abs(targetAngle)>140) {
             angle = currentAngle;
         }
         //translate angle to -180~180
@@ -57,9 +60,9 @@ public class GyroWalker {
 
         double editPower = 0;
 
-        if(Math.abs(errorAngle) < 20) {
+        if(Math.abs(errorAngle) < smallAngle) {
             //make robot still move if the errorAngle is too small
-            editPower = errorAngle * kP * (20 - errorAngle)/20 * 10;
+            editPower = errorAngle * kP * (smallAngle - errorAngle)/smallAngle * smallAngleAdd;
         }
         else {
             editPower =  errorAngle * kP;
@@ -169,5 +172,20 @@ public class GyroWalker {
 
     // final result
 
+    public double getSmallAngleAdd(){
+        return smallAngleAdd;
+    }
+
+    public double getSmallAngle(){
+        return smallAngle;
+    }
+
+    public void setSmallAngleAdd(double smallAngleAdd){
+        this.smallAngleAdd = smallAngleAdd;
+    }
+
+    public void setSmallAngle(double smallAngle){
+        this.smallAngle = smallAngle;
+    }
 
 }
