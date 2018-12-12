@@ -3,6 +3,10 @@ package org.team6083.util;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ *  A class for communicating with OverDashboard.
+ * @since 0.1.0-alpha
+ */
 public class DashBoard {
 
     private static boolean init = false;
@@ -13,7 +17,7 @@ public class DashBoard {
     /**
      * Construct a DashBoard.
      *
-     * @param name part name
+     * @param name the name of the part
      */
     public DashBoard(String name) {
         partName = name;

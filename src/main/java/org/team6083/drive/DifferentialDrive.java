@@ -8,7 +8,7 @@ import org.team6083.util.Joysticks;
 /**
  * A class for controlling robot drive
  * @author KennHuang
- * @since 0.1.0
+ * @since 0.1.0-alpha
  */
 public class DifferentialDrive {
     private SpeedController leftMotor1, leftMotor2, rightMotor1, rightMotor2;
