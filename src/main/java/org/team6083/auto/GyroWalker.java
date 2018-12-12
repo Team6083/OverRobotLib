@@ -3,6 +3,12 @@ package org.team6083.auto;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
+
+/**
+ * Correcting the heading of the drive with gyroscope
+ * @author Alex-Lai, Kenn Huang
+ * @since 0.1.0-alpha
+ */
 public class GyroWalker {
     Gyro gyro;
 
@@ -19,6 +25,13 @@ public class GyroWalker {
     private Timer calculateTimer;
     private double kI_result = 0;
 
+    private double smallAngleAdd;
+    private double smallAngle;
+
+    /**
+     * Construct a GyroWalker
+     * @param gyro the gyroscope that used to correction the heading
+     */
     public GyroWalker(Gyro gyro) {
         this.gyro = gyro;
         leftPower = 0;
@@ -38,6 +51,11 @@ public class GyroWalker {
         resetTimer();
     }
 
+    /**
+     *
+     * @param leftSetPower original power of left
+     * @param rightSetPower
+     */
     public void calculate(double leftSetPower, double rightSetPower) {
         currentSourceAngle = gyro.getAngle();
         currentAngle = translateAngle(currentSourceAngle);
