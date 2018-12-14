@@ -41,7 +41,7 @@ jar {
 }
 
 group = 'com.github.team6083'
-version = '0.1.0-alpha'
+version = '0.1.0-alpha-1'
 
 task sourceJar(type: Jar) {
     classifier "sources"

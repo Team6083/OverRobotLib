@@ -54,7 +54,7 @@ public class GyroWalker {
     /**
      *
      * @param leftSetPower original power of left
-     * @param rightSetPower
+     * @param rightSetPower original power of right
      */
     public void calculate(double leftSetPower, double rightSetPower) {
         currentSourceAngle = gyro.getAngle();
@@ -205,5 +205,7 @@ public class GyroWalker {
     public void setSmallAngle(double smallAngle){
         this.smallAngle = smallAngle;
     }
+
+    // doing with small angle fix
 
 }
