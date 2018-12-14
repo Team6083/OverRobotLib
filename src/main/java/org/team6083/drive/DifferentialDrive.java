@@ -14,6 +14,7 @@ public class DifferentialDrive {
     private SpeedController leftMotor1, leftMotor2, rightMotor1, rightMotor2;
     private boolean reverseDrive = false;
     private double speedDown;
+    private boolean lastButton = false;
 
     /**
      * Construct a DifferentialDrive.
@@ -63,10 +64,26 @@ public class DifferentialDrive {
         double left = -Joysticks.ly / speedDown;
         double right = Joysticks.ry / speedDown;
 
-        if (Joysticks.lab) {
+        if(Joysticks.b && (Joysticks.b!=lastButton)) {
+            reverseDrive = !reverseDrive;
+        }
+
+        if(reverseDrive) {
+            double t = left;
+            left = right;
+            right = t;
+            SmartDashboard.putBoolean("drive/reverse", true);
+        }
+        else {
+            SmartDashboard.putBoolean("drive/reverse", false);
+        }
+
+        reverseDrive = SmartDashboard.getBoolean("drive/reverse", reverseDrive);
+
+        if (Joysticks.lb) {
             left = left * 2;
         }
-        if (Joysticks.rab) {
+        if (Joysticks.rb) {
             right = right * 2;
         }
         directControl(left,right);
