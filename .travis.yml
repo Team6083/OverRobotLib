@@ -17,3 +17,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+jobs:
+  include:
+    - stage: build
+      script: ./gradlew build
+    - stage: deploy
+      if: branch = master
+      script: ./gradlew bintrayPublish
