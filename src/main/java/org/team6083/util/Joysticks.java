@@ -3,6 +3,7 @@ package org.team6083.util;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+@Deprecated
 public class Joysticks {
     private static Joystick joy1, joy2;// 1 is XBox, 2 is 3D Pro
 
