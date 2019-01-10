@@ -7,16 +7,12 @@
 
 plugins {
     id 'java-library'
-    id 'eclipse'
     id 'idea'
-    id "jaci.openrio.gradle.GradleRIO" version "2018.03.06"
+    id "edu.wpi.first.GradleRIO" version "2019.1.1"
 }
 
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
-
 dependencies {
-    compile wpilib()
+    compile wpi.deps.wpilib()
     api 'org.apache.commons:commons-math3:3.6.1'
     implementation 'com.google.guava:guava:23.0'
     testImplementation 'junit:junit:4.12'
@@ -28,11 +24,6 @@ repositories {
     jcenter()
 }
 
-task zip(type: Zip, group: "Archive", description: "Archives sources in a zip file") {
-    from "src"
-    setArchiveName "basic-demo-1.0.zip"
-}
-
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
@@ -42,19 +33,3 @@ jar {
 
 group = 'com.github.team6083'
 version = '0.1.0-alpha-2'
-
-task sourceJar(type: Jar) {
-    classifier "sources"
-    from sourceSets.main.allJava
-}
-
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives jar
-    archives sourceJar
-    archives javadocJar
-}
