@@ -1,7 +1,6 @@
-package org.team6083;
+package org.team6083.lib;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import org.team6083.util.DashBoard;
 
 public class RobotPower {
     private static PowerDistributionPanel pdp;

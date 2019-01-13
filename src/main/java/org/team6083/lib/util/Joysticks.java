@@ -1,4 +1,4 @@
-package org.team6083.util;
+package org.team6083.lib.util;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

@@ -1,4 +1,4 @@
-package org.team6083.auto;
+package org.team6083.lib.auto;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;

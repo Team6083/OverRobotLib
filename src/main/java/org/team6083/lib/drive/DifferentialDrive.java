@@ -1,8 +1,8 @@
-package org.team6083.drive;
+package org.team6083.lib.drive;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.team6083.util.Joysticks;
+import org.team6083.lib.util.Joysticks;
 
 
 /**
