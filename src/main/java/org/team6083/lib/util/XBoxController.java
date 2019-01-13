@@ -1,16 +1,16 @@
-package org.team6083.lib.joysticks;
+package org.team6083.lib.util;
 
 import edu.wpi.first.wpilibj.XboxController;
 import org.team6083.lib.drive.inputs.TankInput;
 
-public class XBox extends XboxController implements TankInput {
+public class XBoxController extends XboxController implements TankInput {
     /**
      * Construct an instance of a joystick. The joystick index is the USB port on the drivers
      * station.
      *
      * @param port The port on the Driver Station that the joystick is plugged into.
      */
-    public XBox(int port) {
+    public XBoxController(int port) {
         super(port);
     }
 
