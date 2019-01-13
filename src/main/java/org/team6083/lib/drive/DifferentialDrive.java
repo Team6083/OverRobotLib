@@ -16,7 +16,8 @@ public class DifferentialDrive {
     private SpeedController leftMotor1, leftMotor2, rightMotor1, rightMotor2;
     private boolean reverseDrive = false;
     private double speedDown;
-    private boolean lastButton = false;
+    private boolean lastButton;
+    private double boostMultiple;
 
     /**
      * Construct a DifferentialDrive.
@@ -34,6 +35,8 @@ public class DifferentialDrive {
 
         speedDown = 2.0;
         dashboard(0, 0);
+        lastButton = false;
+        boostMultiple = 2.0;
     }
 
     /**
@@ -88,10 +91,10 @@ public class DifferentialDrive {
         reverseDrive = SmartDashboard.getBoolean("drive/reverse", reverseDrive);
 
         if (input.leftBoostButton()) {
-            left = left * 2;
+            left = left * boostMultiple;
         }
         if (input.rightBoostButton()) {
-            right = right * 2;
+            right = right * boostMultiple;
         }
         directControl(left, right);
     }
@@ -115,6 +118,8 @@ public class DifferentialDrive {
     }
 
     /**
+     * Get speedDown of the drive.
+     *
      * @return current speedDown
      */
     public double getSpeedDown() {
@@ -122,10 +127,30 @@ public class DifferentialDrive {
     }
 
     /**
+     * Set new speedDown.
+     *
      * @param speedDown new speedDown
      */
     public void setSpeedDown(double speedDown) {
         this.speedDown = speedDown;
+    }
+
+    /**
+     * Get boostMultiple of the drive.
+     *
+     * @return current boostMultiple
+     */
+    public double getBoostMultiple() {
+        return this.boostMultiple;
+    }
+
+    /**
+     * Set new boostMultiple.
+     *
+     * @param boostMultiple new boostMultiple
+     */
+    public void setBoostMultiple(double boostMultiple) {
+        this.boostMultiple = boostMultiple;
     }
 
     private void dashboard(double l_speed, double r_speed) {
