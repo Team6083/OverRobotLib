@@ -2,11 +2,13 @@ package org.team6083.lib.drive;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.team6083.lib.drive.inputs.TankInput;
 import org.team6083.lib.util.Joysticks;
 
 
 /**
  * A class for controlling robot drive
+ *
  * @author KennHuang
  * @since 0.1.0-alpha
  */
@@ -18,8 +20,9 @@ public class DifferentialDrive {
 
     /**
      * Construct a DifferentialDrive.
-     * @param left1 left motor controller 1
-     * @param left2 left motor controller 2
+     *
+     * @param left1  left motor controller 1
+     * @param left2  left motor controller 2
      * @param right1 right motor controller 1
      * @param right2 right motor controller 2
      */
@@ -30,7 +33,7 @@ public class DifferentialDrive {
         rightMotor2 = right2;
 
         speedDown = 2.0;
-        dashboard(0,0);
+        dashboard(0, 0);
     }
 
     /**
@@ -42,7 +45,7 @@ public class DifferentialDrive {
         leftMotor2.set(0);
         rightMotor2.set(0);
 
-        dashboard(0,0);
+        dashboard(0, 0);
     }
 
     /**
@@ -57,40 +60,45 @@ public class DifferentialDrive {
         rightMotor1.set(rightSpeed);
         rightMotor2.set(rightSpeed);
 
-        dashboard(leftSpeed,rightSpeed);
+        dashboard(leftSpeed, rightSpeed);
     }
 
-    public void tankDrive(){
-        double left = -Joysticks.ly / speedDown;
-        double right = Joysticks.ry / speedDown;
+    /**
+     * Control the drive with TankDrive mode.
+     *
+     * @param input A joystick to control the drive.
+     */
+    public void tankDrive(TankInput input) {
+        double left = -input.leftSpeed() / speedDown;
+        double right = input.rightSpeed() / speedDown;
 
-        if(Joysticks.b && (Joysticks.b!=lastButton)) {
+        if (input.toggleReverseButton() && (input.toggleReverseButton() != lastButton)) {
             reverseDrive = !reverseDrive;
         }
 
-        if(reverseDrive) {
+        if (reverseDrive) {
             double t = left;
             left = right;
             right = t;
             SmartDashboard.putBoolean("drive/reverse", true);
-        }
-        else {
+        } else {
             SmartDashboard.putBoolean("drive/reverse", false);
         }
 
         reverseDrive = SmartDashboard.getBoolean("drive/reverse", reverseDrive);
 
-        if (Joysticks.lb) {
+        if (input.leftBoostButton()) {
             left = left * 2;
         }
-        if (Joysticks.rb) {
+        if (input.rightBoostButton()) {
             right = right * 2;
         }
-        directControl(left,right);
+        directControl(left, right);
     }
 
     /**
      * Get speed of left drive.
+     *
      * @return The set value of left drive.
      */
     public double getLeftPower() {
@@ -99,13 +107,28 @@ public class DifferentialDrive {
 
     /**
      * Get speed of right speed.
+     *
      * @return The set value of right drive.
      */
     public double getRightPower() {
         return rightMotor1.get();
     }
 
-    private void dashboard(double l_speed, double r_speed){
+    /**
+     * @return current speedDown
+     */
+    public double getSpeedDown() {
+        return speedDown;
+    }
+
+    /**
+     * @param speedDown new speedDown
+     */
+    public void setSpeedDown(double speedDown) {
+        this.speedDown = speedDown;
+    }
+
+    private void dashboard(double l_speed, double r_speed) {
         SmartDashboard.putBoolean("drive/reverse", reverseDrive);
         SmartDashboard.putNumber("drive/leftSpeed", l_speed);
         SmartDashboard.putNumber("drive/rightSpeed", r_speed);
