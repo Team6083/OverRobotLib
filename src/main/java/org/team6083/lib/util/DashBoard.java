@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *  A class for communicating with OverDashboard.
+ * A class for communicating with OverDashboard.
+ *
  * @since 0.1.0-alpha
  */
 public class DashBoard {
@@ -54,32 +55,45 @@ public class DashBoard {
     /**
      * Mark part ready.
      */
-    public void putReady() {
+    public void markReady() {
         SmartDashboard.putNumber(partName + "/status", 0);
     }
 
     /**
      * Mark part warning.
      */
-    public void putWarning() {
+    public void markWarning() {
         SmartDashboard.putNumber(partName + "/status", 1);
     }
 
     /**
      * Mark part error.
      */
-    public void putError() {
+    public void markError() {
         SmartDashboard.putNumber(partName + "/status", 2);
     }
 
+    /**
+     * Update left displacement.
+     *
+     * @param leftDis current displacement of left drive
+     */
     public void putLeftDis(double leftDis) {
         SmartDashboard.putNumber("Left Dis", leftDis);
     }
 
+    /**
+     * Update right displacement.
+     *
+     * @param rightDis current displacement of right drive
+     */
     public void putRightDis(double rightDis) {
         SmartDashboard.putNumber("Right Dis", rightDis);
     }
 
+    /**
+     * @param angle current robot heading
+     */
     public static void putGyroAngle(double angle) {
         SmartDashboard.putNumber("Gyro/angle", angle);
     }
@@ -104,6 +118,5 @@ public class DashBoard {
         }
 
         SmartDashboard.putNumber("ds/mode", mode);
-
     }
 }

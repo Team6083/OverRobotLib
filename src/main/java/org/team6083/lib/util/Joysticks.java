@@ -3,6 +3,9 @@ package org.team6083.lib.util;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * @deprecated Use XBoxController instead.
+ */
 @Deprecated
 public class Joysticks {
     private static Joystick joy1, joy2;// 1 is XBox, 2 is 3D Pro
