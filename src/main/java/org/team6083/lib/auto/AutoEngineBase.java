@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.team6083.lib.util.DashBoard;
+import org.team6083.lib.dashboard.DashBoard;
 
 /**
  * Extend this class to use for auto robot code.
@@ -12,7 +12,7 @@ import org.team6083.lib.util.DashBoard;
  * @author KennHuang
  * @since 0.1.0-alpha-4
  */
-public abstract class AutoEngine {
+public abstract class AutoEngineBase {
     private static boolean init = false;
 
     protected static SendableChooser<String> m_chooser = new SendableChooser<>();
