@@ -1,4 +1,4 @@
-package org.team6083.lib.util;
+package org.team6083.lib.dashboard;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -55,6 +55,7 @@ public class DashBoard {
     /**
      * Mark part ready.
      */
+    @Deprecated
     public void markReady() {
         SmartDashboard.putNumber(partName + "/status", 0);
     }
@@ -62,6 +63,7 @@ public class DashBoard {
     /**
      * Mark part warning.
      */
+    @Deprecated
     public void markWarning() {
         SmartDashboard.putNumber(partName + "/status", 1);
     }
@@ -69,31 +71,20 @@ public class DashBoard {
     /**
      * Mark part error.
      */
+    @Deprecated
     public void markError() {
         SmartDashboard.putNumber(partName + "/status", 2);
     }
 
-    /**
-     * Update left displacement.
-     *
-     * @param leftDis current displacement of left drive
-     */
+
     public void putLeftDis(double leftDis) {
         SmartDashboard.putNumber("Left Dis", leftDis);
     }
 
-    /**
-     * Update right displacement.
-     *
-     * @param rightDis current displacement of right drive
-     */
     public void putRightDis(double rightDis) {
         SmartDashboard.putNumber("Right Dis", rightDis);
     }
 
-    /**
-     * @param angle current robot heading
-     */
     public static void putGyroAngle(double angle) {
         SmartDashboard.putNumber("Gyro/angle", angle);
     }
