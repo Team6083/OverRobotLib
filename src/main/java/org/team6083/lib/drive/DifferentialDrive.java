@@ -1,5 +1,6 @@
 package org.team6083.lib.drive;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team6083.lib.drive.inputs.TankInput;
@@ -17,6 +18,8 @@ public class DifferentialDrive {
     private double speedDown;
     private boolean lastButton;
     private double boostMultiple;
+
+    private Encoder leftEnc, rightEnc;
 
     /**
      * Construct a DifferentialDrive.
@@ -36,6 +39,16 @@ public class DifferentialDrive {
         dashboard(0, 0);
         lastButton = false;
         boostMultiple = 2.0;
+    }
+
+    /**
+     * Attach encoder to the drive base.
+     * @param left left side encoder
+     * @param right right side encoder
+     */
+    public void attachEncoder(Encoder left, Encoder right){
+        leftEnc = left;
+        rightEnc = right;
     }
 
     /**
@@ -150,6 +163,14 @@ public class DifferentialDrive {
      */
     public void setBoostMultiple(double boostMultiple) {
         this.boostMultiple = boostMultiple;
+    }
+
+    public boolean getReverseDrive(){
+        return reverseDrive;
+    }
+
+    public void setReverseDrive(boolean reverse){
+        reverseDrive = reverse;
     }
 
     private void dashboard(double l_speed, double r_speed) {
