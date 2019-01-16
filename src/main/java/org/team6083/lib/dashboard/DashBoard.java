@@ -77,11 +77,11 @@ public class DashBoard {
     }
 
 
-    public void putLeftDis(double leftDis) {
+    public static void putLeftDis(double leftDis) {
         SmartDashboard.putNumber("Left Dis", leftDis);
     }
 
-    public void putRightDis(double rightDis) {
+    public static void putRightDis(double rightDis) {
         SmartDashboard.putNumber("Right Dis", rightDis);
     }
 
