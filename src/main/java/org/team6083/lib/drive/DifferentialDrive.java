@@ -43,10 +43,11 @@ public class DifferentialDrive {
 
     /**
      * Attach encoder to the drive base.
-     * @param left left side encoder
+     *
+     * @param left  left side encoder
      * @param right right side encoder
      */
-    public void attachEncoder(Encoder left, Encoder right){
+    public void attachEncoder(Encoder left, Encoder right) {
         leftEnc = left;
         rightEnc = right;
     }
@@ -84,8 +85,8 @@ public class DifferentialDrive {
      * @param input A joystick to control the drive.
      */
     public void tankDrive(TankInput input) {
-        double left = -input.leftSpeed() / speedDown;
-        double right = input.rightSpeed() / speedDown;
+        double left = calculateTankSpeed(input, TankInput.Hand.LEFT);
+        double right = calculateTankSpeed(input, TankInput.Hand.RIGHT);
 
         if (input.toggleReverseButton() && (input.toggleReverseButton() != lastButton)) {
             reverseDrive = !reverseDrive;
@@ -99,16 +100,27 @@ public class DifferentialDrive {
         } else {
             SmartDashboard.putBoolean("drive/reverse", false);
         }
-
         reverseDrive = SmartDashboard.getBoolean("drive/reverse", reverseDrive);
 
-        if (input.leftBoostButton()) {
-            left = left * boostMultiple;
-        }
-        if (input.rightBoostButton()) {
-            right = right * boostMultiple;
-        }
         directControl(left, right);
+    }
+
+    public double calculateTankSpeed(TankInput input, TankInput.Hand hand) {
+        double speed = 0;
+        double boost = 1;
+        if (hand == TankInput.Hand.LEFT) {
+            speed = -input.leftSpeed();
+            if (input.leftBoostButton()) {
+                boost = boostMultiple;
+            }
+        } else if (hand == TankInput.Hand.RIGHT) {
+            speed = input.rightSpeed();
+            if(input.rightBoostButton()){
+                boost = boostMultiple;
+            }
+        }
+
+        return speed / speedDown * boost;
     }
 
     /**
@@ -165,11 +177,11 @@ public class DifferentialDrive {
         this.boostMultiple = boostMultiple;
     }
 
-    public boolean getReverseDrive(){
+    public boolean getReverseDrive() {
         return reverseDrive;
     }
 
-    public void setReverseDrive(boolean reverse){
+    public void setReverseDrive(boolean reverse) {
         reverseDrive = reverse;
     }
 
@@ -178,6 +190,6 @@ public class DifferentialDrive {
         SmartDashboard.putNumber("drive/leftSpeed", l_speed);
         SmartDashboard.putNumber("drive/rightSpeed", r_speed);
         SmartDashboard.putNumber("drive/speedDown", speedDown);
-        SmartDashboard.putNumber("drive/boostMultiple",boostMultiple);
+        SmartDashboard.putNumber("drive/boostMultiple", boostMultiple);
     }
 }
