@@ -178,5 +178,6 @@ public class DifferentialDrive {
         SmartDashboard.putNumber("drive/leftSpeed", l_speed);
         SmartDashboard.putNumber("drive/rightSpeed", r_speed);
         SmartDashboard.putNumber("drive/speedDown", speedDown);
+        SmartDashboard.putNumber("drive/boostMultiple",boostMultiple);
     }
 }

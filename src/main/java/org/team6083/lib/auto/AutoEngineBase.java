@@ -32,7 +32,7 @@ public abstract class AutoEngineBase {
     protected static String currentStep = "";
     protected static Timer autoTimer = new Timer();
 
-    protected static DashBoard dashBoard;
+    protected static DashBoard dashBoard = new DashBoard("AutoEngine");
 
     public static void init() {
         if(!init){
@@ -45,7 +45,6 @@ public abstract class AutoEngineBase {
             m_chooser.setDefaultOption("Do nothing", kDoNothing);
             SmartDashboard.putData("Auto choices", m_chooser);
 
-            dashBoard = new DashBoard("AutoEngine");
             SmartDashboard.putNumber("autoDelay", 0);
             SmartDashboard.putString("CurrentStep", "wait to start");
 
