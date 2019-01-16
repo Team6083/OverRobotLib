@@ -24,10 +24,6 @@ public class RobotPower {
         return pdp.getCurrent(devicePort);
     }
 
-    public static double getTotalVoltage() {
-        return pdp.getVoltage();
-    }
-
     public static double getTotalCurrent() {
         return pdp.getTotalCurrent();
     }
