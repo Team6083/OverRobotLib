@@ -32,7 +32,7 @@ public class DashBoard {
             new Thread(() -> {
                 Thread.currentThread().setName("DashboardLooper");
                 while (runLoop) {
-                    dashboardLoop();
+                    robotStatusLoop();
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -89,7 +89,7 @@ public class DashBoard {
         SmartDashboard.putNumber("Gyro/angle", angle);
     }
 
-    private static void dashboardLoop() {
+    private static void robotStatusLoop() {
         DriverStation ds = DriverStation.getInstance();
 
         SmartDashboard.putBoolean("ds/isFMSAtt", ds.isFMSAttached());
