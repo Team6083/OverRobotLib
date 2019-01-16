@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * @deprecated Use XBoxController instead.
+ * @deprecated Use {@link org.team6083.lib.util.XBoxController} instead.
  */
 @Deprecated
 public class Joysticks {

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  * @since 0.1.0-alpha
  */
 public class GyroWalker {
-    Gyro gyro;
+    private Gyro gyro;
 
     private double currentSourceAngle, currentAngle;
     private double errorAngle;
