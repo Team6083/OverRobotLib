@@ -1,5 +1,6 @@
 package org.team6083.lib.util;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import org.team6083.lib.drive.inputs.TankInput;
 
@@ -16,12 +17,12 @@ public class XBoxController extends XboxController implements TankInput {
 
     @Override
     public double leftSpeed() {
-        return getY(Hand.kLeft);
+        return getY(GenericHID.Hand.kLeft);
     }
 
     @Override
     public double rightSpeed() {
-        return getY(Hand.kRight);
+        return getY(GenericHID.Hand.kRight);
     }
 
     @Override
@@ -31,11 +32,11 @@ public class XBoxController extends XboxController implements TankInput {
 
     @Override
     public boolean leftBoostButton() {
-        return getBumper(Hand.kLeft);
+        return getBumper(GenericHID.Hand.kLeft);
     }
 
     @Override
     public boolean rightBoostButton() {
-        return getBumper(Hand.kRight);
+        return getBumper(GenericHID.Hand.kRight);
     }
 }

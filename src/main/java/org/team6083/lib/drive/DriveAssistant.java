@@ -3,6 +3,11 @@ package org.team6083.lib.drive;
 import org.team6083.lib.auto.GyroWalker;
 import org.team6083.lib.drive.inputs.TankInput;
 
+/**
+ * A class for controlling the drive base with some basic assistant feature.
+ * @since 0.1.0-alpha-4
+ * @author KennHuang
+ */
 public class DriveAssistant {
     private GyroWalker gyroWalker;
     private DifferentialDrive drive;
@@ -11,15 +16,25 @@ public class DriveAssistant {
     private boolean headingLock = false;
     private double targetHeading = 0;
 
+    /**
+     * Constructor of DriveAssistant
+     *
+     * @param gyroWalker        {@link org.team6083.lib.auto.GyroWalker} instance that used to assistant the driver.
+     * @param differentialDrive Drive system
+     * @param input             the controller that used to control the robot
+     */
     public DriveAssistant(GyroWalker gyroWalker, DifferentialDrive differentialDrive, TankInput input) {
         this.gyroWalker = gyroWalker;
         this.drive = differentialDrive;
         this.tankInput = input;
     }
 
+    /**
+     * Call this periodically to use DriveAssistant.
+     */
     public void teleopLoop() {
-        double left = drive.calculateTankSpeed(tankInput, TankInput.Hand.LEFT);
-        double right = drive.calculateTankSpeed(tankInput, TankInput.Hand.RIGHT);
+        double left = drive.calculateTankSpeed(tankInput, DifferentialDrive.Side.kLeft);
+        double right = drive.calculateTankSpeed(tankInput, DifferentialDrive.Side.kRight);
 
         if (headingLock) {
             gyroWalker.calculate(left, right);

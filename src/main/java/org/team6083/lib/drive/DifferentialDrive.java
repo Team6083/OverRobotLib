@@ -79,14 +79,19 @@ public class DifferentialDrive {
         dashboard(leftSpeed, rightSpeed);
     }
 
+    public enum Side{
+        kLeft,
+        kRight
+    }
+
     /**
      * Control the drive with TankDrive mode.
      *
      * @param input A joystick to control the drive.
      */
     public void tankDrive(TankInput input) {
-        double left = calculateTankSpeed(input, TankInput.Hand.LEFT);
-        double right = calculateTankSpeed(input, TankInput.Hand.RIGHT);
+        double left = calculateTankSpeed(input, Side.kLeft);
+        double right = calculateTankSpeed(input, Side.kRight);
 
         if (input.toggleReverseButton() && (input.toggleReverseButton() != lastButton)) {
             reverseDrive = !reverseDrive;
@@ -105,15 +110,15 @@ public class DifferentialDrive {
         directControl(left, right);
     }
 
-    public double calculateTankSpeed(TankInput input, TankInput.Hand hand) {
+    public double calculateTankSpeed(TankInput input, Side side) {
         double speed = 0;
         double boost = 1;
-        if (hand == TankInput.Hand.LEFT) {
+        if (side == Side.kLeft) {
             speed = -input.leftSpeed();
             if (input.leftBoostButton()) {
                 boost = boostMultiple;
             }
-        } else if (hand == TankInput.Hand.RIGHT) {
+        } else if (side == Side.kRight) {
             speed = input.rightSpeed();
             if(input.rightBoostButton()){
                 boost = boostMultiple;
