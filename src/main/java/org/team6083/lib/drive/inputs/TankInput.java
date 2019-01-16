@@ -6,4 +6,9 @@ public interface TankInput {
     boolean toggleReverseButton();
     boolean leftBoostButton();
     boolean rightBoostButton();
+
+    public enum Hand{
+        LEFT,
+        RIGHT
+    }
 }
