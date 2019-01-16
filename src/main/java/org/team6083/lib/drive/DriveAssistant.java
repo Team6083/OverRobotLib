@@ -1,21 +1,18 @@
 package org.team6083.lib.drive;
 
-import org.team6083.lib.auto.EncoderWalker;
 import org.team6083.lib.auto.GyroWalker;
 import org.team6083.lib.drive.inputs.TankInput;
 
 public class DriveAssistant {
     private GyroWalker gyroWalker;
-    private EncoderWalker encoderWalker;
     private DifferentialDrive drive;
     private TankInput tankInput;
 
     private boolean headingLock = false;
     private double targetHeading = 0;
 
-    public DriveAssistant(GyroWalker gyroWalker, EncoderWalker encoderWalker, DifferentialDrive differentialDrive, TankInput input) {
+    public DriveAssistant(GyroWalker gyroWalker, DifferentialDrive differentialDrive, TankInput input) {
         this.gyroWalker = gyroWalker;
-        this.encoderWalker = encoderWalker;
         this.drive = differentialDrive;
         this.tankInput = input;
     }
