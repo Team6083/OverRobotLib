@@ -15,6 +15,26 @@ public class XBoxController extends XboxController implements TankInput {
         super(port);
     }
 
+    public static final double AxisErrorRange = 0.05;
+
+    @Override
+    public double getX(Hand hand) {
+        double v = super.getX(hand);
+        if (Math.abs(v) < AxisErrorRange) {
+            v = 0;
+        }
+        return v;
+    }
+
+    @Override
+    public double getY(Hand hand) {
+        double v = super.getY(hand);
+        if (Math.abs(v) < AxisErrorRange) {
+            v = 0;
+        }
+        return v;
+    }
+
     @Override
     public double leftSpeed() {
         return getY(GenericHID.Hand.kLeft);
