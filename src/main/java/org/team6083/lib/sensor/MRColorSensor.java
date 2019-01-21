@@ -5,6 +5,9 @@ import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import org.team6083.lib.util.TypeConversion;
 
+/**
+ * A class for reading values from modern robotics color sensor.
+ */
 public class MRColorSensor extends SendableBase {
 
     public enum Register {
@@ -67,6 +70,30 @@ public class MRColorSensor extends SendableBase {
     public int readColorNumber() {
         byte[] read = new byte[1];
         m_i2c.read(Register.COLOR_NUMBER.bVal, 1, read);
+        return TypeConversion.unsignedByteToInt(read[0]);
+    }
+
+    public int red(){
+        byte[] read = new byte[1];
+        m_i2c.read(Register.RED.bVal,1, read);
+        return TypeConversion.unsignedByteToInt(read[0]);
+    }
+
+    public int blue(){
+        byte[] read = new byte[1];
+        m_i2c.read(Register.BLUE.bVal,1, read);
+        return TypeConversion.unsignedByteToInt(read[0]);
+    }
+
+    public int green(){
+        byte[] read = new byte[1];
+        m_i2c.read(Register.GREEN.bVal,1, read);
+        return TypeConversion.unsignedByteToInt(read[0]);
+    }
+
+    public int alpha(){
+        byte[] read = new byte[1];
+        m_i2c.read(Register.ALPHA.bVal,1, read);
         return TypeConversion.unsignedByteToInt(read[0]);
     }
 
