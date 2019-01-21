@@ -23,7 +23,7 @@ jobs:
       script: ./gradlew build
     - stage: deploy
       if: branch = master
-      script: ./gradlew bintrayPublish
+      script: ./gradlew bintrayUpload
 
 
 notifications:
