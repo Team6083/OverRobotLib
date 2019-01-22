@@ -29,6 +29,6 @@ jobs:
 notifications:
   slack:
     rooms:
-      - overlooking6083:Lp2WgrOh00dRH5MOhbJ2Jt4H
-    on_success: always # default: always
+      - overlooking6083:Lp2WgrOh00dRH5MOhbJ2Jt4H#overlib-dev
+    on_success: change # default: always
     on_failure: always # default: always
