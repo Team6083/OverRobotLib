@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
  * Correcting the heading of the drive with gyroscope
+ *
  * @author Alex-Lai, Kenn Huang
  * @since 0.1.0-alpha
  */
@@ -30,6 +31,7 @@ public class GyroWalker {
 
     /**
      * Construct a GyroWalker
+     *
      * @param gyro the gyroscope that used to correction the heading
      */
     public GyroWalker(Gyro gyro) {
@@ -52,8 +54,7 @@ public class GyroWalker {
     }
 
     /**
-     *
-     * @param leftSetPower original power of left
+     * @param leftSetPower  original power of left
      * @param rightSetPower original power of right
      */
     public void calculate(double leftSetPower, double rightSetPower) {
@@ -61,11 +62,11 @@ public class GyroWalker {
         currentAngle = translateAngle(currentSourceAngle);
 
         double angle = currentAngle;
-        if(angle > 180) {
+        if (angle > 180) {
             angle = angle - 360;
         }
 
-        if(Math.abs(targetAngle)>140) {
+        if (Math.abs(targetAngle) > 140) {
             angle = currentAngle;
         }
         //translate angle to -180~180
@@ -78,20 +79,19 @@ public class GyroWalker {
 
         double editPower = 0;
 
-        if(Math.abs(errorAngle) < smallAngle) {
+        if (Math.abs(errorAngle) < smallAngle) {
             //make robot still move if the errorAngle is too small
-            editPower = errorAngle * kP * (smallAngle - errorAngle)/smallAngle * smallAngleAdd;
-        }
-        else {
-            editPower =  errorAngle * kP;
+            editPower = errorAngle * kP * (smallAngle - errorAngle) / smallAngle * smallAngleAdd;
+        } else {
+            editPower = errorAngle * kP;
         }
         //calculate output diff with kP
 
-        editPower += kI* kI_result;
+        editPower += kI * kI_result;
         //calculate output diff with kI
 
-        if(editPower>maxEdit) {
-            editPower = (editPower > 0)?maxEdit:-maxEdit;
+        if (editPower > maxEdit) {
+            editPower = (editPower > 0) ? maxEdit : -maxEdit;
         }
         //limit the max output diff
 
@@ -99,7 +99,7 @@ public class GyroWalker {
         rightPower = rightSetPower - editPower;
         //calculate final output
 
-        if(Math.abs(leftPower)>maxPower) {
+        if (Math.abs(leftPower) > maxPower) {
             if (leftPower >= 0) {
                 leftPower = maxPower;
             } else {
@@ -108,7 +108,7 @@ public class GyroWalker {
         }
 
 
-        if(Math.abs(rightPower)>maxPower) {
+        if (Math.abs(rightPower) > maxPower) {
             if (rightPower >= 0) {
                 rightPower = maxPower;
             } else {
@@ -118,48 +118,71 @@ public class GyroWalker {
         //limit max output
     }
 
+    /**
+     * Set a heading for GyroWalker to follow.
+     *
+     * @param angle target heading of the robot
+     */
     public void setTargetAngle(double angle) {
         targetAngle = angle;
         resetTimer();
     }
 
-    private void resetTimer(){
+    private void resetTimer() {
         kI_result = 0;
         calculateTimer.stop();
         calculateTimer.reset();
         calculateTimer.start();
     }
 
+    /**
+     * Convert the angle that will continue from 360 to 361 degrees to the range of -180~180 degrees.
+     *
+     * @param sourceAngle the angle that get from the gyro output
+     * @return translated angle, from -180~180 degrees
+     */
     public static double translateAngle(double sourceAngle) {
-        double angle = sourceAngle - (360 * (int)(sourceAngle/360));
-        if(angle < 0) {
+        double angle = sourceAngle - (360 * (int) (sourceAngle / 360));
+        if (angle < 0) {
             angle = 360 + angle;
         }
         return angle;
     }
 
+    /**
+     * Set the proportional term,
+     * @param kP Proportional term for the PID controller
+     */
     public void setkP(double kP) {
         this.kP = kP;
     }
 
+    /**
+     * Set the Integral term.
+     * @param kI Integral term for the PID controller
+     */
     public void setkI(double kI) {
         this.kI = kI;
     }
 
-    public double getkP(){
+    public double getkP() {
         return kP;
     }
 
-    public double getkI(){
+    public double getkI() {
         return kI;
     }
 
-    public double getkI_result(){
+    public double getkI_result() {
         return kI_result;
     }
 
     // calculate process
 
+    /**
+     * Set the maximum variation value.
+     * @param power max variation value
+     */
     public void setMaxPower(double power) {
         maxPower = power;
     }
@@ -190,19 +213,19 @@ public class GyroWalker {
 
     // final result
 
-    public double getSmallAngleAdd(){
+    public double getSmallAngleAdd() {
         return smallAngleAdd;
     }
 
-    public double getSmallAngle(){
+    public double getSmallAngle() {
         return smallAngle;
     }
 
-    public void setSmallAngleAdd(double smallAngleAdd){
+    public void setSmallAngleAdd(double smallAngleAdd) {
         this.smallAngleAdd = smallAngleAdd;
     }
 
-    public void setSmallAngle(double smallAngle){
+    public void setSmallAngle(double smallAngle) {
         this.smallAngle = smallAngle;
     }
 
