@@ -15,26 +15,26 @@ import org.team6083.lib.dashboard.DashBoard;
 public abstract class AutoEngineBase {
     private static boolean init = false;
 
-    protected static SendableChooser<String> m_chooser = new SendableChooser<>();
-    protected static final String kDoNothing = "Do nothing";
-    protected static String m_autoSelected;
+    protected SendableChooser<String> m_chooser = new SendableChooser<>();
+    protected final String kDoNothing = "Do nothing";
+    protected String m_autoSelected;
 
-    protected static SendableChooser<String> a_chooser = new SendableChooser<>();
-    protected static final String kA1 = "A1";
-    protected static final String kA2 = "A2";
-    protected static final String kA3 = "A3";
-    protected static String allianceSelected;
-    protected static int station;
+    protected SendableChooser<String> a_chooser = new SendableChooser<>();
+    protected final String kA1 = "A1";
+    protected final String kA2 = "A2";
+    protected final String kA3 = "A3";
+    protected String allianceSelected;
+    protected int station;
 
-    protected static String gameData;
+    protected String gameData;
 
-    protected static int step;
-    protected static String currentStep = "";
-    protected static Timer autoTimer = new Timer();
+    protected int step;
+    protected String currentStep = "";
+    protected Timer autoTimer = new Timer();
 
-    protected static DashBoard dashBoard = new DashBoard("AutoEngine");
+    protected DashBoard dashBoard = new DashBoard("AutoEngine");
 
-    public static void init() {
+    public void init() {
         if(!init){
             dashBoard.markWarning();
             a_chooser.setDefaultOption("A1", kA1);
@@ -52,7 +52,7 @@ public abstract class AutoEngineBase {
         }
     }
 
-    public static void start(){
+    public void start(){
         m_autoSelected = m_chooser.getSelected();
         allianceSelected = a_chooser.getSelected();
         System.out.println("Auto selected: " + m_autoSelected + " on " + allianceSelected);
@@ -78,13 +78,13 @@ public abstract class AutoEngineBase {
         Timer.delay(SmartDashboard.getNumber("autoDelay", 0));
     }
 
-    public static void loop(){
+    public void loop(){
 
         SmartDashboard.putString("CurrentStep", currentStep);
         SmartDashboard.putNumber("Timer", autoTimer.get());
     }
 
-    protected static void nextStep() {
+    protected void nextStep() {
         step++;
         System.out.println("Finish step:"+currentStep);
         autoTimer.stop();

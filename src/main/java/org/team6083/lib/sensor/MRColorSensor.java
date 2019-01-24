@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import org.team6083.lib.util.TypeConversion;
 
 /**
- * A class for reading values from modern robotics color sensor.
+ * A class for reading values from Modern Robotic color sensor.
  */
 public class MRColorSensor extends SendableBase {
 
@@ -63,28 +63,50 @@ public class MRColorSensor extends SendableBase {
 
     private I2C m_i2c;
 
+    /**
+     * Constructor of the class.
+     * @param port I2C port of the sensor
+     * @param deviceAddress I2C address of the sensor
+     */
     public MRColorSensor(I2C.Port port, int deviceAddress) {
         m_i2c = new I2C(port, deviceAddress);
     }
 
+    /**
+     * Get the number of the color that sensor get.
+     * @see <a href="https://modernroboticsinc.com/color-sensor">https://modernroboticsinc.com/color-sensor</a>
+     * @return the color number that sensor get
+     */
     public int readColorNumber() {
         byte[] read = new byte[1];
         m_i2c.read(Register.COLOR_NUMBER.bVal, 1, read);
         return TypeConversion.unsignedByteToInt(read[0]);
     }
 
+    /**
+     * Get the red value.
+     * @return red value that sensor currently read
+     */
     public int red(){
         byte[] read = new byte[1];
         m_i2c.read(Register.RED.bVal,1, read);
         return TypeConversion.unsignedByteToInt(read[0]);
     }
 
+    /**
+     * Get the blue value.
+     * @return blue value that sensor currently read
+     */
     public int blue(){
         byte[] read = new byte[1];
         m_i2c.read(Register.BLUE.bVal,1, read);
         return TypeConversion.unsignedByteToInt(read[0]);
     }
 
+    /**
+     * Get the green value.
+     * @return green value that sensor currently read
+     */
     public int green(){
         byte[] read = new byte[1];
         m_i2c.read(Register.GREEN.bVal,1, read);
