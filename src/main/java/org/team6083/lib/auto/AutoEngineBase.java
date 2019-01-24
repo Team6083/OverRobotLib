@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team6083.lib.dashboard.AutoDashboard;
 import org.team6083.lib.dashboard.DashBoard;
+import org.team6083.lib.dashboard.DashboardStatus;
 import org.team6083.lib.util.annotation.Unstable;
 
 /**
@@ -14,14 +15,12 @@ import org.team6083.lib.util.annotation.Unstable;
  * @since 0.1.0-alpha-4
  */
 @Unstable
-public abstract class AutoEngineBase {
-    protected AutoDashboard autoDashboard;
+public abstract class AutoEngineBase implements DashboardStatus {
+    private boolean init = false;
 
     protected String modeSelected;
-
     protected String allianceSelected;
     protected int station;
-
     protected String gameData;
 
     protected int step;
@@ -29,14 +28,15 @@ public abstract class AutoEngineBase {
     protected Timer autoTimer = new Timer();
 
     protected DashBoard dashBoard;
+    protected AutoDashboard autoDashboard;
 
     public AutoEngineBase() {
         autoDashboard = new AutoDashboard();
         dashBoard = new DashBoard("AutoEngine");
     }
 
-    public void init(){
-
+    public void init() {
+        init = true;
     }
 
     public final void start() {
@@ -54,12 +54,12 @@ public abstract class AutoEngineBase {
         afterStartDelay();
     }
 
-    protected void autoInit(){
+    protected void autoInit() {
 
     }
 
 
-    protected void afterStartDelay(){
+    protected void afterStartDelay() {
 
     }
 
@@ -74,5 +74,14 @@ public abstract class AutoEngineBase {
         autoTimer.stop();
         autoTimer.reset();
         autoTimer.start();
+    }
+
+    @Override
+    public final Status getStatus() {
+        if (init && autoDashboard.getStatus() == Status.OK) {
+            return Status.OK;
+        } else {
+            return Status.ERROR;
+        }
     }
 }

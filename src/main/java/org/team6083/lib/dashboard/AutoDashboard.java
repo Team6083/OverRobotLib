@@ -3,7 +3,9 @@ package org.team6083.lib.dashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AutoDashboard {
+public class AutoDashboard implements DashboardStatus {
+    private boolean init = false;
+
     private SendableChooser<String> m_chooser;
     public static final String kDoNothing = "Do nothing";
 
@@ -24,14 +26,15 @@ public class AutoDashboard {
         a_chooser.addOption(kA3, kA3);
     }
 
-    public void init(){
+    public void init() {
         SmartDashboard.putData("Auto choices", m_chooser);
         SmartDashboard.putData("Auto point choices", a_chooser);
         SmartDashboard.putNumber("autoDelay", 0);
         SmartDashboard.putString("CurrentStep", "wait to start");
+        init = true;
     }
 
-    public double getAutoDelay(){
+    public double getAutoDelay() {
         return SmartDashboard.getNumber("autoDelay", 0);
     }
 
@@ -43,7 +46,7 @@ public class AutoDashboard {
         return m_chooser.getSelected();
     }
 
-    public String getSelectedStation(){
+    public String getSelectedStation() {
         return a_chooser.getSelected();
     }
 
@@ -61,5 +64,10 @@ public class AutoDashboard {
                 break;
         }
         return 0;
+    }
+
+    @Override
+    public Status getStatus() {
+        return init ? Status.OK : Status.WARNING;
     }
 }
