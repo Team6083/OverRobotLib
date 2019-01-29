@@ -54,6 +54,7 @@ public abstract class AutoEngineBase implements DashboardStatus {
      */
     public void init() {
         init = true;
+        dashBoard.markReady();
     }
 
     public final void start() {
