@@ -79,7 +79,7 @@ public class DifferentialDrive {
         dashboard(leftSpeed, rightSpeed);
     }
 
-    public enum Side{
+    public enum Side {
         kLeft,
         kRight
     }
@@ -120,7 +120,7 @@ public class DifferentialDrive {
             }
         } else if (side == Side.kRight) {
             speed = input.rightSpeed();
-            if(input.rightBoostButton()){
+            if (input.rightBoostButton()) {
                 boost = boostMultiple;
             }
         }
@@ -144,6 +144,24 @@ public class DifferentialDrive {
      */
     public double getRightPower() {
         return rightMotor1.get();
+    }
+
+    /**
+     * Get the left side encoder distance.
+     *
+     * @return left side walked distance
+     */
+    public double getLeftDis() {
+        return leftEnc.getDistance();
+    }
+
+    /**
+     * Get the right side encoder distance.
+     *
+     * @return right side walked distance
+     */
+    public double getRightDis() {
+        return rightEnc.getDistance();
     }
 
     /**
