@@ -31,7 +31,7 @@ public class EncoderWalker {
     }
 
     /**
-     * Reset the EncoderWalker. <strong> This will not reset the Encoder, you have to manually reset the Encoder. </strong>
+     * Reset the EncoderWalker. <strong> This will not reset the Encoder. You have to reset the Encoder manually.</strong>
      */
     public void reset() {
         leftSpeed = 0;
@@ -65,8 +65,9 @@ public class EncoderWalker {
 
     /**
      * Use this to walk the robot with EncoderWalker.
-     *  <strong>You have to setup the distance per plus of the Encoders before using this</strong>.
-     * @param targetDistance distance robot should walk
+     * <strong>You have to setup the distance per plus of the Encoders before using this.</strong>.
+     *
+     * @param targetDistance the distance of the target
      */
     public void walk(double targetDistance) {
         double leftDistance = getLeftDis();

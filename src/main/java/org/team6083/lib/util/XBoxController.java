@@ -6,8 +6,8 @@ import org.team6083.lib.drive.inputs.TankInput;
 
 public class XBoxController extends XboxController implements TankInput {
     /**
-     * Construct an instance of a joystick. The joystick index is the USB port on the drivers
-     * station.
+     * Construct an instance of a joystick.
+     * The joystick index is the USB port on the "Driver Station".
      *
      * @param port The port on the Driver Station that the joystick is plugged into.
      */

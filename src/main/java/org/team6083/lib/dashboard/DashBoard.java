@@ -25,7 +25,7 @@ public class DashBoard {
     }
 
     /**
-     * Initialize DashBoard, only need to run on time once the robot start.
+     * Initialize DashBoard, only need to run once the robot start.
      */
     public static void init() {
         if (!init) {
@@ -55,7 +55,6 @@ public class DashBoard {
     /**
      * Mark part ready.
      */
-    @Deprecated
     public void markReady() {
         SmartDashboard.putNumber(partName + "/status", 0);
     }
@@ -63,7 +62,6 @@ public class DashBoard {
     /**
      * Mark part warning.
      */
-    @Deprecated
     public void markWarning() {
         SmartDashboard.putNumber(partName + "/status", 1);
     }
@@ -71,7 +69,6 @@ public class DashBoard {
     /**
      * Mark part error.
      */
-    @Deprecated
     public void markError() {
         SmartDashboard.putNumber(partName + "/status", 2);
     }

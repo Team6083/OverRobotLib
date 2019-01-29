@@ -5,8 +5,9 @@ import org.team6083.lib.drive.inputs.TankInput;
 
 /**
  * A class for controlling the drive base with some basic assistant feature.
- * @since 0.1.0-alpha-4
+ *
  * @author KennHuang
+ * @since 0.1.0-alpha-4
  */
 public class DriveAssistant {
     private GyroWalker gyroWalker;
@@ -19,7 +20,7 @@ public class DriveAssistant {
     /**
      * Constructor of DriveAssistant
      *
-     * @param gyroWalker        {@link org.team6083.lib.auto.GyroWalker} instance that used to assistant the driver.
+     * @param gyroWalker        {@link org.team6083.lib.auto.GyroWalker} instance that used to assistant the driver
      * @param differentialDrive Drive system
      * @param input             the controller that used to control the robot
      */

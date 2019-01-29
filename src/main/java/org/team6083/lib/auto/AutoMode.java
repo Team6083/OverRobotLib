@@ -3,6 +3,7 @@ package org.team6083.lib.auto;
 import org.team6083.lib.SensorHub;
 import org.team6083.lib.drive.DifferentialDrive;
 
+@Deprecated
 public abstract class AutoMode {
 
     protected DifferentialDrive drive;
