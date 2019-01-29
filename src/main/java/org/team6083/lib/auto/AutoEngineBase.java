@@ -18,8 +18,17 @@ import org.team6083.lib.util.annotation.Unstable;
 public abstract class AutoEngineBase implements DashboardStatus {
     private boolean init = false;
 
+    /**
+     * current selected mode
+     */
     protected String modeSelected;
+    /**
+     * current selected station
+     */
     protected String allianceSelected;
+    /**
+     * current selected station
+     */
     protected int station;
     protected String gameData;
 
@@ -30,11 +39,19 @@ public abstract class AutoEngineBase implements DashboardStatus {
     protected DashBoard dashBoard;
     protected AutoDashboard autoDashboard;
 
+    /**
+     * Constructor of this class.
+     */
     public AutoEngineBase() {
         autoDashboard = new AutoDashboard();
         dashBoard = new DashBoard("AutoEngine");
     }
 
+    /**
+     * This is the initialization code of the AutoEngine.
+     * Override this method to write your own initialization code.
+     * <b>Call this in robotInit()</b>
+     */
     public void init() {
         init = true;
     }
