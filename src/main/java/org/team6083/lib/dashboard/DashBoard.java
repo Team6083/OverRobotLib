@@ -25,7 +25,7 @@ public class DashBoard {
     }
 
     /**
-     * Initialize DashBoard, only need to run on time once the robot start.
+     * Initialize DashBoard, only need to run once the robot start.
      */
     public static void init() {
         if (!init) {
