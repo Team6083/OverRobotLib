@@ -8,7 +8,7 @@
 plugins {
     id 'java-library'
     id 'idea'
-    id "edu.wpi.first.GradleRIO" version "2019.1.1"
+    id "edu.wpi.first.GradleRIO" version "2020.2.2"
     id "com.jfrog.bintray" version "1.8.4"
     id 'maven-publish'
 }
