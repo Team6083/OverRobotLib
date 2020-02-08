@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 /**
  * Correcting the heading of the drive with gyroscope
  *
- * @author Alex-Lai, Kenn Huang
+ * @author Alex-Lai, Kenn Huang, Tasi Yun-Shing
  * @since 0.1.0-alpha
  */
 public class GyroWalker {
@@ -16,21 +16,11 @@ public class GyroWalker {
     private PIDController pidController;
 
     private double currentSourceAngle, currentAngle;
-    private double errorAngle;
     private double targetAngle;
 
     private double leftPower, rightPower;
-    private double Kp;
-    private double Ki;
-    private double Kd;
     private double maxPower;
     private double maxEdit;
-
-    private Timer calculateTimer;
-    private double kI_result = 0;
-
-    private double smallAngleAdd;
-    private double smallAngle;
 
     /**
      * Construct a GyroWalker
@@ -43,17 +33,10 @@ public class GyroWalker {
         rightPower = 0;
         targetAngle = 0;
 
-        Kp = 0.025;
-        Ki = 0.01;
+        pidController = new PIDController(0, 0, 0);
 
         maxPower = 0.7;
         maxEdit = 0.5;
-        calculateTimer = new Timer();
-
-        smallAngle = 0;
-        smallAngleAdd = 10;
-
-        resetTimer();
     }
 
     /**
@@ -74,24 +57,9 @@ public class GyroWalker {
         }
         //translate angle to -180~180
 
-        errorAngle = targetAngle - angle;
-        //calculate the difference between target angle and current angle
-
-        double nowtime = calculateTimer.get();
-        kI_result += nowtime * errorAngle;
-
         double editPower = 0;
 
-        if (Math.abs(errorAngle) < smallAngle) {
-            //make robot still move if the errorAngle is too small
-            editPower = errorAngle * Kp * (smallAngle - errorAngle) / smallAngle * smallAngleAdd;
-        } else {
-            editPower = errorAngle * Kp;
-        }
-        //calculate output diff with kP
-
-        editPower += Ki * kI_result;
-        //calculate output diff with kI
+        editPower = calculate_in_frc_api(angle, targetAngle);
 
         if (editPower > maxEdit) {
             editPower = (editPower > 0) ? maxEdit : -maxEdit;
@@ -121,27 +89,27 @@ public class GyroWalker {
         //limit max output
     }
 
-   /**
-   * Returns the next output of the PID controller.
-   *
-   * @param measurement The current measurement of the process variable.
-   * @param setpoint    The new setpoint of the controller.
-   */
-    public double calculate_in_frc_api(double measurement, double setPoint){
+    /**
+     * Returns the next output of the PID controller.
+     *
+     * @param measurement The current measurement of the process variable.
+     * @param setPoint    The new setpoint of the controller.
+     */
+    public double calculate_in_frc_api(double measurement, double setPoint) {
         return pidController.calculate(measurement, setPoint);
     }
 
     /**
      * set three pid term in order to calculate
-     * 
-     * @param kP Proportional term for the PID controller
-     * @param kI Integral term for the PID controller
-     * @param kD derivative term for the PID controller
+     *
+     * @param Kp Proportional term for the PID controller
+     * @param Ki Integral term for the PID controller
+     * @param Kd derivative term for the PID controller
      */
-    public void setPID(double Kp, double Ki, double Kd){
-        this.Kp = Kp;
-        this.Ki = Ki;
-        this.Kd = Kd;
+    public void setPID(double Kp, double Ki, double Kd) {
+        setP(Kp);
+        setI(Ki);
+        setD(Kd);
     }
 
     /**
@@ -150,7 +118,7 @@ public class GyroWalker {
      * @param Kp proportional coefficient
      */
     public void setP(double Kp) {
-        this.Kp = Kp;
+        pidController.setP(Kp);
     }
 
     /**
@@ -159,7 +127,7 @@ public class GyroWalker {
      * @param Ki integral coefficient
      */
     public void setI(double Ki) {
-        this.Ki = Ki;
+        pidController.setI(Ki);
     }
 
     /**
@@ -168,7 +136,7 @@ public class GyroWalker {
      * @param Kd differential coefficient
      */
     public void setD(double Kd) {
-        this.Kd = Kd;
+        pidController.setD(Kd);
     }
 
     /**
@@ -178,14 +146,6 @@ public class GyroWalker {
      */
     public void setTargetAngle(double angle) {
         targetAngle = angle;
-        resetTimer();
-    }
-
-    private void resetTimer() {
-        kI_result = 0;
-        calculateTimer.stop();
-        calculateTimer.reset();
-        calculateTimer.start();
     }
 
     /**
@@ -202,26 +162,23 @@ public class GyroWalker {
         return angle;
     }
 
-    public double getkp() {
-        return Kp;
+    public double getKp() {
+        return pidController.getP();
     }
 
-    public double getki() {
-        return Ki;
+    public double getKi() {
+        return pidController.getI();
     }
 
     public double getKd() {
-        return Kd;
-    }
-
-    public double getkI_result() {
-        return kI_result;
+        return pidController.getD();
     }
 
     // calculate process
 
     /**
      * Set the maximum variation value.
+     *
      * @param power max variation value
      */
     public void setMaxPower(double power) {
@@ -237,7 +194,7 @@ public class GyroWalker {
     }
 
     public double getErrorAngle() {
-        return errorAngle;
+        return pidController.getPositionError();
     }
 
     public double getLeftPower() {
@@ -253,23 +210,5 @@ public class GyroWalker {
     }
 
     // final result
-
-    public double getSmallAngleAdd() {
-        return smallAngleAdd;
-    }
-
-    public double getSmallAngle() {
-        return smallAngle;
-    }
-
-    public void setSmallAngleAdd(double smallAngleAdd) {
-        this.smallAngleAdd = smallAngleAdd;
-    }
-
-    public void setSmallAngle(double smallAngle) {
-        this.smallAngle = smallAngle;
-    }
-
-    // doing with small angle fix
 
 }
