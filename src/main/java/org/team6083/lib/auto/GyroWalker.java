@@ -1,6 +1,7 @@
 package org.team6083.lib.auto;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 
@@ -12,14 +13,16 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  */
 public class GyroWalker {
     private Gyro gyro;
+    private PIDController pidController;
 
     private double currentSourceAngle, currentAngle;
     private double errorAngle;
     private double targetAngle;
 
     private double leftPower, rightPower;
-    private double kP;
-    private double kI;
+    private double Kp;
+    private double Ki;
+    private double Kd;
     private double maxPower;
     private double maxEdit;
 
@@ -40,8 +43,8 @@ public class GyroWalker {
         rightPower = 0;
         targetAngle = 0;
 
-        kP = 0.025;
-        kI = 0.01;
+        Kp = 0.025;
+        Ki = 0.01;
 
         maxPower = 0.7;
         maxEdit = 0.5;
@@ -81,13 +84,13 @@ public class GyroWalker {
 
         if (Math.abs(errorAngle) < smallAngle) {
             //make robot still move if the errorAngle is too small
-            editPower = errorAngle * kP * (smallAngle - errorAngle) / smallAngle * smallAngleAdd;
+            editPower = errorAngle * Kp * (smallAngle - errorAngle) / smallAngle * smallAngleAdd;
         } else {
-            editPower = errorAngle * kP;
+            editPower = errorAngle * Kp;
         }
         //calculate output diff with kP
 
-        editPower += kI * kI_result;
+        editPower += Ki * kI_result;
         //calculate output diff with kI
 
         if (editPower > maxEdit) {
@@ -116,6 +119,56 @@ public class GyroWalker {
             }
         }
         //limit max output
+    }
+
+   /**
+   * Returns the next output of the PID controller.
+   *
+   * @param measurement The current measurement of the process variable.
+   * @param setpoint    The new setpoint of the controller.
+   */
+    public double calculate_in_frc_api(double measurement, double setPoint){
+        return pidController.calculate(measurement, setPoint);
+    }
+
+    /**
+     * set three pid term in order to calculate
+     * 
+     * @param kP Proportional term for the PID controller
+     * @param kI Integral term for the PID controller
+     * @param kD derivative term for the PID controller
+     */
+    public void setPID(double Kp, double Ki, double Kd){
+        this.Kp = Kp;
+        this.Ki = Ki;
+        this.Kd = Kd;
+    }
+
+    /**
+     * Sets the Proportional coefficient of the PID controller gain.
+     *
+     * @param Kp proportional coefficient
+     */
+    public void setP(double Kp) {
+        this.Kp = Kp;
+    }
+
+    /**
+     * Sets the Integral coefficient of the PID controller gain.
+     *
+     * @param Ki integral coefficient
+     */
+    public void setI(double Ki) {
+        this.Ki = Ki;
+    }
+
+    /**
+     * Sets the Differential coefficient of the PID controller gain.
+     *
+     * @param Kd differential coefficient
+     */
+    public void setD(double Kd) {
+        this.Kd = Kd;
     }
 
     /**
@@ -149,28 +202,16 @@ public class GyroWalker {
         return angle;
     }
 
-    /**
-     * Set the proportional term,
-     * @param kP Proportional term for the PID controller
-     */
-    public void setkP(double kP) {
-        this.kP = kP;
+    public double getkp() {
+        return Kp;
     }
 
-    /**
-     * Set the Integral term.
-     * @param kI Integral term for the PID controller
-     */
-    public void setkI(double kI) {
-        this.kI = kI;
+    public double getki() {
+        return Ki;
     }
 
-    public double getkP() {
-        return kP;
-    }
-
-    public double getkI() {
-        return kI;
+    public double getKd() {
+        return Kd;
     }
 
     public double getkI_result() {
