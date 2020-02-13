@@ -27,6 +27,7 @@ public class DifferentialDrive {
 
     private Encoder leftEnc, rightEnc;
 
+    //the following variable can be delete if the newest code dosen't work
     private boolean m_reported;
 
     public static final double kDefaultDeadband = 0.02;
@@ -63,7 +64,7 @@ public class DifferentialDrive {
         boostMultiple = 2.0;
     }
 
-      /**
+   /** if the following code dosen't work ,delete it
    * Arcade drive method for differential drive platform.
    *
    * @param xSpeed        The robot's speed along the X axis [-1.0..1.0]. Forward is positive.
@@ -128,6 +129,7 @@ public class DifferentialDrive {
           m_stopTime = Timer.getFPGATimestamp() + m_expiration;
         }
       }
+    // delete to here
     
 
     protected double applyDeadband(double value, double deadband) {
