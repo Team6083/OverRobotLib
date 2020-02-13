@@ -1,8 +1,14 @@
 package org.team6083.lib.drive;
 
+import edu.wpi.first.hal.HAL;
+import edu.wpi.first.hal.FRCNetComm.tInstances;
+import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpiutil.math.MathUtil;
+
 import org.team6083.lib.drive.inputs.TankInput;
 
 
@@ -21,8 +27,6 @@ public class DifferentialDrive {
 
     private Encoder leftEnc, rightEnc;
 
-<<<<<<< Updated upstream
-=======
     //the following variable can be delete if the newest code dosen't work
     private boolean m_reported;
 
@@ -40,7 +44,6 @@ public class DifferentialDrive {
     private double m_stopTime = Timer.getFPGATimestamp();
   
 
->>>>>>> Stashed changes
     /**
      * Construct a DifferentialDrive.
      *
@@ -61,8 +64,6 @@ public class DifferentialDrive {
         boostMultiple = 2.0;
     }
 
-<<<<<<< Updated upstream
-=======
    /** if the following code dosen't work ,delete it
    * Arcade drive method for differential drive platform.
    *
@@ -143,7 +144,6 @@ public class DifferentialDrive {
         }
       }
 
->>>>>>> Stashed changes
     /**
      * Attach encoder to the drive base.
      *
