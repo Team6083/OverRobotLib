@@ -1,8 +1,14 @@
 package org.team6083.lib.drive;
 
+import edu.wpi.first.hal.HAL;
+import edu.wpi.first.hal.FRCNetComm.tInstances;
+import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpiutil.math.MathUtil;
+
 import org.team6083.lib.drive.inputs.TankInput;
 
 
@@ -20,6 +26,22 @@ public class DifferentialDrive {
     private double boostMultiple;
 
     private Encoder leftEnc, rightEnc;
+
+    private boolean m_reported;
+
+    public static final double kDefaultDeadband = 0.02;
+    public static final double kDefaultMaxOutput = 1.0;
+    private static final double kDefaultSafetyExpiration = 0.1;
+    private double m_rightSideInvertMultiplier = -1.0;
+  
+    protected double m_deadband = kDefaultDeadband;
+    protected double m_maxOutput = kDefaultMaxOutput;
+
+    private final Object m_thisMutex = new Object();
+
+    private double m_expiration = kDefaultSafetyExpiration;
+    private double m_stopTime = Timer.getFPGATimestamp();
+  
 
     /**
      * Construct a DifferentialDrive.
@@ -40,6 +62,85 @@ public class DifferentialDrive {
         lastButton = false;
         boostMultiple = 2.0;
     }
+
+      /**
+   * Arcade drive method for differential drive platform.
+   *
+   * @param xSpeed        The robot's speed along the X axis [-1.0..1.0]. Forward is positive.
+   * @param zRotation     The robot's rotation rate around the Z axis [-1.0..1.0]. Clockwise is
+   *                      positive.
+   * @param squareInputs If set, decreases the input sensitivity at low speeds.
+   */
+    public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
+    if (!m_reported) {
+        HAL.report(tResourceType.kResourceType_RobotDrive,
+                   tInstances.kRobotDrive2_DifferentialArcade, 2);
+        m_reported = true;
+      }
+  
+      xSpeed = MathUtil.clamp(xSpeed, -1.0, 1.0);
+      xSpeed = applyDeadband(xSpeed, m_deadband);
+  
+      zRotation = MathUtil.clamp(zRotation, -1.0, 1.0);
+      zRotation = applyDeadband(zRotation, m_deadband);
+  
+      // Square the inputs (while preserving the sign) to increase fine control
+      // while permitting full power.
+      if (squareInputs) {
+        xSpeed = Math.copySign(xSpeed * xSpeed, xSpeed);
+        zRotation = Math.copySign(zRotation * zRotation, zRotation);
+      }
+  
+      double leftMotorOutput;
+      double rightMotorOutput;
+  
+      double maxInput = Math.copySign(Math.max(Math.abs(xSpeed), Math.abs(zRotation)), xSpeed);
+  
+      if (xSpeed >= 0.0) {
+        // First quadrant, else second quadrant
+        if (zRotation >= 0.0) {
+          leftMotorOutput = maxInput;
+          rightMotorOutput = xSpeed - zRotation;
+        } else {
+          leftMotorOutput = xSpeed + zRotation;
+          rightMotorOutput = maxInput;
+        }
+      } else {
+        // Third quadrant, else fourth quadrant
+        if (zRotation >= 0.0) {
+          leftMotorOutput = xSpeed + zRotation;
+          rightMotorOutput = maxInput;
+        } else {
+          leftMotorOutput = maxInput;
+          rightMotorOutput = xSpeed - zRotation;
+        }
+      }
+  
+      leftMotor1.set(MathUtil.clamp(leftMotorOutput, -1.0, 1.0) * m_maxOutput);
+      double maxOutput = m_maxOutput * m_rightSideInvertMultiplier;
+      rightMotor1.set(MathUtil.clamp(rightMotorOutput, -1.0, 1.0) * maxOutput);
+  
+      feed();
+    }
+
+    public void feed() {
+        synchronized (m_thisMutex) {
+          m_stopTime = Timer.getFPGATimestamp() + m_expiration;
+        }
+      }
+    
+
+    protected double applyDeadband(double value, double deadband) {
+        if (Math.abs(value) > deadband) {
+          if (value > 0.0) {
+            return (value - deadband) / (1.0 - deadband);
+          } else {
+            return (value + deadband) / (1.0 - deadband);
+          }
+        } else {
+          return 0.0;
+        }
+      }
 
     /**
      * Attach encoder to the drive base.
@@ -78,6 +179,8 @@ public class DifferentialDrive {
 
         dashboard(leftSpeed, rightSpeed);
     }
+
+
 
     public enum Side {
         kLeft,
