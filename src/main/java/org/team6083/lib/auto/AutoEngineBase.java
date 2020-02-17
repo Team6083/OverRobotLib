@@ -25,11 +25,8 @@ public abstract class AutoEngineBase implements DashboardStatus {
     /**
      * current selected station
      */
-    protected String allianceSelected;
-    /**
-     * current selected station
-     */
-    protected int station;
+    protected AutoDashboard.AllianceStations allianceSelected;
+
     protected String gameData;
 
     protected int step;
@@ -59,7 +56,6 @@ public abstract class AutoEngineBase implements DashboardStatus {
 
     public final void start() {
         modeSelected = autoDashboard.getSelectedMode();
-        station = autoDashboard.getStation();
         allianceSelected = autoDashboard.getSelectedStation();
         System.out.println("Auto selected: " + modeSelected + " on " + allianceSelected);
 
