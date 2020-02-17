@@ -117,9 +117,10 @@ public class DifferentialDrive {
       }
   
       leftMotor1.set(MathUtil.clamp(leftMotorOutput, -1.0, 1.0) * m_maxOutput);
+      leftMotor2.set(MathUtil.clamp(leftMotorOutput, -1.0, 1.0) * m_maxOutput);
       double maxOutput = m_maxOutput * m_rightSideInvertMultiplier;
       rightMotor1.set(MathUtil.clamp(rightMotorOutput, -1.0, 1.0) * maxOutput);
-  
+      rightMotor2.set(MathUtil.clamp(rightMotorOutput, -1.0, 1.0) * maxOutput);
       feed();
     }
 
