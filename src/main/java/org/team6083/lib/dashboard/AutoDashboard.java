@@ -9,7 +9,14 @@ public class AutoDashboard implements DashboardStatus {
     private SendableChooser<String> m_chooser;
     public static final String kDoNothing = "Do nothing";
 
-    private SendableChooser<String> a_chooser;
+    private SendableChooser<AllianceStations> a_chooser;
+
+    public enum AllianceStations {
+        kA1,
+        kA2,
+        kA3
+    }
+
     public static final String kA1 = "A1";
     public static final String kA2 = "A2";
     public static final String kA3 = "A3";
@@ -21,9 +28,9 @@ public class AutoDashboard implements DashboardStatus {
 
         m_chooser.setDefaultOption(kDoNothing, kDoNothing);
 
-        a_chooser.setDefaultOption(kA1, kA1);
-        a_chooser.addOption(kA2, kA2);
-        a_chooser.addOption(kA3, kA3);
+        a_chooser.setDefaultOption(kA1, AllianceStations.kA1);
+        a_chooser.addOption(kA2, AllianceStations.kA2);
+        a_chooser.addOption(kA3, AllianceStations.kA3);
     }
 
     public void init() {
@@ -46,24 +53,8 @@ public class AutoDashboard implements DashboardStatus {
         return m_chooser.getSelected();
     }
 
-    public String getSelectedStation() {
+    public AllianceStations getSelectedStation() {
         return a_chooser.getSelected();
-    }
-
-    public int getStation() {
-        String allianceSelected = a_chooser.getSelected();
-        switch (allianceSelected) {
-            case kA1:
-                return 1;
-            case kA2:
-                return 2;
-            case kA3:
-                return 3;
-            default:
-                System.err.println("Error Selected Station.");
-                break;
-        }
-        return 0;
     }
 
     @Override
