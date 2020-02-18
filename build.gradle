@@ -51,7 +51,7 @@ artifacts {
 }
 
 group = 'com.github.team6083'
-version = '2020.1.0-alpha-5'
+version = '2020.1.0-beta-1'
 
 bintray {
     user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
