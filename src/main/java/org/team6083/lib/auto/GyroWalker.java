@@ -145,6 +145,7 @@ public class GyroWalker {
      * @param angle target heading of the robot
      */
     public void setTargetAngle(double angle) {
+        pidController.setSetpoint(angle);
         targetAngle = angle;
     }
 
