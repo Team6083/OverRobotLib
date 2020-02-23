@@ -22,6 +22,8 @@ public class GyroWalker {
     private double maxPower;
     private double maxEdit;
 
+    private boolean useTranslateAngle = false;
+
     /**
      * Construct a GyroWalker
      *
@@ -45,7 +47,7 @@ public class GyroWalker {
      */
     public void calculate(double leftSetPower, double rightSetPower) {
         currentSourceAngle = gyro.getAngle();
-        currentAngle = translateAngle(currentSourceAngle);
+        currentAngle = useTranslateAngle ? translateAngle(currentSourceAngle) : currentSourceAngle;
 
         double angle = currentAngle;
         if (angle > 180) {
@@ -212,4 +214,11 @@ public class GyroWalker {
 
     // final result
 
+    public void setUseTranslateAngle(boolean useTranslateAngle) {
+        this.useTranslateAngle = useTranslateAngle;
+    }
+
+    public boolean getUseTranslateAngle() {
+        return useTranslateAngle;
+    }
 }
