@@ -146,4 +146,12 @@ public class EncoderWalker {
         }
     }
 
+    /**
+     * Check whether the encoder walker is finished.
+     * @return if the encoder walker finished
+     */
+    public boolean isFinished() {
+        return finished;
+    }
+
 }
