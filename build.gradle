@@ -8,7 +8,7 @@
 plugins {
     id 'java-library'
     id 'idea'
-    id "edu.wpi.first.GradleRIO" version "2020.2.2"
+    id "edu.wpi.first.GradleRIO" version "2021.1.2"
     id "com.jfrog.bintray" version "1.8.4"
     id 'maven-publish'
 }
@@ -51,7 +51,7 @@ artifacts {
 }
 
 group = 'com.github.team6083'
-version = '2020.2.0'
+version = '2021.1.0'
 
 bintray {
     user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
