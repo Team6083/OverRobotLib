@@ -87,19 +87,17 @@ public class DashBoard {
     }
 
     private static void robotStatusLoop() {
-        DriverStation ds = DriverStation.getInstance();
-
-        SmartDashboard.putBoolean("ds/isFMSAtt", ds.isFMSAttached());
-        SmartDashboard.putNumber("ds/matchTime", ds.getMatchTime());
+        SmartDashboard.putBoolean("ds/isFMSAtt", DriverStation.isFMSAttached());
+        SmartDashboard.putNumber("ds/matchTime", DriverStation.getMatchTime());
 
         int mode;
-        if (ds.isDisabled()) {
+        if (DriverStation.isDisabled()) {
             mode = 0;
-        } else if (ds.isOperatorControl()) {
+        } else if (DriverStation.isTeleop()) {
             mode = 2;
-        } else if (ds.isTest()) {
+        } else if (DriverStation.isTest()) {
             mode = 3;
-        } else if (ds.isAutonomous()) {
+        } else if (DriverStation.isAutonomous()) {
             mode = 1;
         } else {
             mode = -1;

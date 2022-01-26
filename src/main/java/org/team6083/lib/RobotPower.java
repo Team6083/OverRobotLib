@@ -1,9 +1,9 @@
 package org.team6083.lib;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.PowerDistribution;
 
 public class RobotPower {
-    private static PowerDistributionPanel pdp;
+    private static PowerDistribution pdp;
     private static int PDP_CANID = 1;
     private static boolean inited = false;
 
@@ -12,7 +12,7 @@ public class RobotPower {
     public static void init(int pdp_CANId) {
         if(!inited) {
             PDP_CANID = pdp_CANId;
-            pdp = new PowerDistributionPanel(PDP_CANID);
+            pdp = new PowerDistribution(PDP_CANID, PowerDistribution.ModuleType.kCTRE);
         }
     }
 

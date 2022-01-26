@@ -1,15 +1,14 @@
 package org.team6083.lib.sensor;
 
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.SendableBase;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import org.team6083.lib.util.TypeConversion;
 
 /**
  * A class for reading values from Modern Robotic color sensor.
  */
-public class MRColorSensor extends SendableBase {
-
+public class MRColorSensor implements Sendable {
     public enum Register {
         FIRMWARE_REV(0x00),
         MANUFACTURE_CODE(0x01),

@@ -8,14 +8,14 @@
 plugins {
     id 'java-library'
     id 'idea'
-    id "edu.wpi.first.GradleRIO" version "2021.1.2"
-    id "com.jfrog.bintray" version "1.8.4"
+    id "edu.wpi.first.GradleRIO" version "2022.2.1"
     id 'maven-publish'
 }
 
 dependencies {
-    compile wpi.deps.wpilib()
-    compile wpi.deps.vendor.java()
+    implementation wpi.java.deps.wpilib()
+    implementation wpi.java.vendor.java()
+
     api 'org.apache.commons:commons-math3:3.6.1'
     implementation 'com.google.guava:guava:23.0'
     testImplementation 'junit:junit:4.12'
@@ -24,7 +24,6 @@ dependencies {
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
 }
 
 jar {
@@ -51,37 +50,4 @@ artifacts {
 }
 
 group = 'com.github.team6083'
-version = '2021.1.0'
-
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-
-    pkg {
-        repo = 'OverRobotLib'
-        name = 'OverRobotLib'
-        userOrg = 'team6083'
-        licenses = []
-        vcsUrl = 'https://github.com/Team6083/OverRobotLib.git'
-
-        version {
-            name = project.version
-            released = new Date()
-        }
-
-        publications = ['JCenterPublication']
-    }
-}
-
-publishing {
-    publications {
-        JCenterPublication(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            groupId project.group
-            artifactId project.name
-            version project.version
-        }
-    }
-}
+version = '2022.1.0'

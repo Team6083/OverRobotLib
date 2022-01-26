@@ -1,6 +1,5 @@
 package org.team6083.lib.util;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import org.team6083.lib.drive.inputs.TankInput;
 
@@ -18,8 +17,8 @@ public class XBoxController extends XboxController implements TankInput {
     public static final double AxisErrorRange = 0.05;
 
     @Override
-    public double getX(Hand hand) {
-        double v = super.getX(hand);
+    public double getLeftX() {
+        double v = super.getLeftX();
         if (Math.abs(v) < AxisErrorRange) {
             v = 0;
         }
@@ -27,8 +26,26 @@ public class XBoxController extends XboxController implements TankInput {
     }
 
     @Override
-    public double getY(Hand hand) {
-        double v = super.getY(hand);
+    public double getLeftY() {
+        double v = super.getLeftY();
+        if (Math.abs(v) < AxisErrorRange) {
+            v = 0;
+        }
+        return v;
+    }
+
+    @Override
+    public double getRightX() {
+        double v = super.getRightX();
+        if (Math.abs(v) < AxisErrorRange) {
+            v = 0;
+        }
+        return v;
+    }
+
+    @Override
+    public double getRightY() {
+        double v = super.getRightY();
         if (Math.abs(v) < AxisErrorRange) {
             v = 0;
         }
@@ -37,12 +54,12 @@ public class XBoxController extends XboxController implements TankInput {
 
     @Override
     public double leftSpeed() {
-        return getY(GenericHID.Hand.kLeft);
+        return getLeftY();
     }
 
     @Override
     public double rightSpeed() {
-        return getY(GenericHID.Hand.kRight);
+        return getRightY();
     }
 
     @Override
@@ -52,11 +69,11 @@ public class XBoxController extends XboxController implements TankInput {
 
     @Override
     public boolean leftBoostButton() {
-        return getBumper(GenericHID.Hand.kLeft);
+        return getLeftBumper();
     }
 
     @Override
     public boolean rightBoostButton() {
-        return getBumper(GenericHID.Hand.kRight);
+        return getRightBumper();
     }
 }

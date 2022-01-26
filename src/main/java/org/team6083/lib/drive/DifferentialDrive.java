@@ -3,11 +3,11 @@ package org.team6083.lib.drive;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpiutil.math.MathUtil;
 
 import org.team6083.lib.drive.inputs.TankInput;
 
@@ -19,7 +19,7 @@ import org.team6083.lib.drive.inputs.TankInput;
  * @since 0.1.0-alpha
  */
 public class DifferentialDrive {
-    private SpeedController leftMotor1, leftMotor2, rightMotor1, rightMotor2;
+    private MotorController leftMotor1, leftMotor2, rightMotor1, rightMotor2;
     private boolean reverseDrive = false;
     private double speedDown;
     private boolean lastButton;
@@ -27,7 +27,7 @@ public class DifferentialDrive {
 
     private Encoder leftEnc, rightEnc;
 
-    //the following variable can be delete if the newest code dosen't work
+    //the following variable can be deleted if the newest code doesn't work
     private boolean m_reported;
 
     public static final double kDefaultDeadband = 0.02;
@@ -52,7 +52,7 @@ public class DifferentialDrive {
      * @param right1 right motor controller 1
      * @param right2 right motor controller 2
      */
-    public DifferentialDrive(SpeedController left1, SpeedController left2, SpeedController right1, SpeedController right2) {
+    public DifferentialDrive(MotorController left1, MotorController left2, MotorController right1, MotorController right2) {
         leftMotor1 = left1;
         leftMotor2 = left2;
         rightMotor1 = right1;
