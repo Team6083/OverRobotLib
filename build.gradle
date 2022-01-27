@@ -49,5 +49,23 @@ artifacts {
     archives javadocJar
 }
 
-group = 'com.github.team6083'
+group = 'io.github.team6083'
 version = '2022.1.0'
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/team6083/overrobotlib")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
