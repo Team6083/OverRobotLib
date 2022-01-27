@@ -23,7 +23,7 @@ jobs:
       script: ./gradlew build
     - stage: deploy
       if: branch = master
-      script: ./gradlew bintrayUpload
+      script: ./gradlew publishMavenJavaPublicationToOssrhRepository
 
 
 notifications:
