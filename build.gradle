@@ -10,6 +10,7 @@ plugins {
     id 'idea'
     id "edu.wpi.first.GradleRIO" version "2022.2.1"
     id 'maven-publish'
+    id 'signing'
 }
 
 dependencies {
@@ -26,31 +27,24 @@ repositories {
     mavenCentral()
 }
 
-jar {
-    manifest {
-        attributes('Implementation-Title': project.name,
-                'Implementation-Version': project.version)
-    }
-}
-
 task sourcesJar(type: Jar) {
     classifier "sources"
-    from sourceSets.main.allJava
+    from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'
-    from javadoc.destinationDir
+    from javadoc
 }
 
 artifacts {
-    archives jar
-    archives sourcesJar
-    archives javadocJar
+    archives sourcesJar, javadocJar
 }
 
 group = 'io.github.team6083'
 version = '2022.1.0'
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 publishing {
     repositories {
@@ -62,10 +56,62 @@ publishing {
                 password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
             }
         }
+
+        maven {
+            name = "ossrh"
+            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = isReleaseVersion ? releaseRepo : snapshotRepo
+            credentials {
+                username = project.findProperty('ossrh.username')
+                password = project.findProperty('ossrh.password')
+            }
+        }
     }
+
     publications {
         gpr(MavenPublication) {
             from(components.java)
         }
+
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'OverRobotLib'
+                description = 'A robot library for FRC Team.'
+                url = 'https://github.com/Team6083/OverRobotLib'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'team6083'
+                        name = 'Team6083'
+                        email = 'frc2016@my.cmsh.cyc.edu.tw'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/Team6083/OverRobotLib.git'
+                    developerConnection = 'scm:git:https://github.com/Team6083/OverRobotLib'
+                    url = 'https://github.com/Team6083/OverRobotLib'
+                }
+            }
+        }
     }
+}
+
+signing {
+    useGpgCmd()
+
+    sign configurations.archives
+    sign publishing.publications.mavenJava
+}
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
 }
