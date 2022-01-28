@@ -20,7 +20,7 @@ cache:
 jobs:
   include:
     - stage: build
-      script: ./gradlew build
+      script: ./gradlew build --debug
     - stage: deploy
       if: branch = master
       script: ./gradlew publishAllPublicationsToOssrhRepository --debug
