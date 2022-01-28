@@ -42,7 +42,7 @@ artifacts {
 }
 
 group = 'io.github.team6083'
-version = '2022.1.0'
+version = '2022.1.1'
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
@@ -106,14 +106,12 @@ publishing {
 }
 
 signing {
+    required { isReleaseVersion }
+
     def signingKey = findProperty("signingKey") ?: System.getenv('signingKey')
     def signingPassword = findProperty("signingPassword") ?: System.getenv('signingPassword')
     useInMemoryPgpKeys(signingKey, signingPassword)
 
     sign configurations.archives
-    sign publishing.publications.mavenJava
-}
-
-tasks.withType(Sign) {
-    onlyIf { isReleaseVersion }
+    sign publishing.publications
 }
