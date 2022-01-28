@@ -19,6 +19,8 @@ cache:
 
 jobs:
   include:
+    - stage: print
+      script: echo $signingKey
     - stage: build
       script: ./gradlew build --info
     - stage: deploy
