@@ -23,7 +23,7 @@ jobs:
       script: ./gradlew build
     - stage: deploy
       if: branch = master
-      script: ./gradlew publishMavenJavaPublicationToOssrhRepository
+      script: ./gradlew publishAllPublicationsToOssrhRepository --debug
 
 
 notifications:
