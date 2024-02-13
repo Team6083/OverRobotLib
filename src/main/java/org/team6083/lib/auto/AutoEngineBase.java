@@ -59,7 +59,7 @@ public abstract class AutoEngineBase implements DashboardStatus {
         allianceSelected = autoDashboard.getSelectedStation();
         System.out.println("Auto selected: " + modeSelected + " on " + allianceSelected);
 
-        gameData = DriverStation.getInstance().getGameSpecificMessage();
+        gameData = DriverStation.getGameSpecificMessage();
 
         autoInit();
 
