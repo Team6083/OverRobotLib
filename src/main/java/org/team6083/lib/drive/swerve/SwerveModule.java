@@ -4,7 +4,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveModule extends SubsystemBase {
@@ -12,21 +14,20 @@ public class SwerveModule extends SubsystemBase {
      * Creates a new SwerveModule.
      */
 
-    protected final DriveMotor driveMotor;
-    protected final TurningMotor turningMotor;
-    protected final TurningEncoder turningEncoder;
-    protected final DriveEncoder driveEncoder;
+    protected final MotorController driveMotor;
+    protected final MotorController turningMotor;
+    protected final SwerveTurningEncoder turningEncoder;
+    protected final SwerveDriveEncoder driveEncoder;
     protected final PIDController rotController;
 
     protected final double kDesireSpeedToMotorVoltage;
 
     public SwerveModule(
-            DriveMotor driveMotor, TurningMotor turningMotor,
-            DriveEncoder driveEncoder, TurningEncoder turningEncoder,
+            MotorController driveMotor, MotorController turningMotor,
+            SwerveDriveEncoder driveEncoder, SwerveTurningEncoder turningEncoder,
             double kPRot, double kIRot, double kDRot,
             double kDesireSpeedToMotorVoltage
     ) {
-
         this.driveMotor = driveMotor;
         this.turningMotor = turningMotor;
         this.driveEncoder = driveEncoder;
@@ -52,15 +53,15 @@ public class SwerveModule extends SubsystemBase {
     }
 
     // to get rotation of turning motor
-    public double getRotation() {
-        return turningEncoder.getRotation();
+    public Rotation2d getRotation() {
+        return turningEncoder.getAbsRotation();
     }
 
     // to get the single swerveModule speed and the turning rate
     public SwerveModuleState getState() {
         return new SwerveModuleState(
                 getDriveRate(),
-                new Rotation2d(Math.toRadians(getRotation()))
+                getRotation()
         );
     }
 
@@ -68,12 +69,12 @@ public class SwerveModule extends SubsystemBase {
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
                 getDriveDistance(),
-                new Rotation2d(Math.toRadians(getRotation()))
+                getRotation()
         );
     }
 
     protected double[] calculateOutputVoltage(SwerveModuleState goalState) {
-        var currentTurningDegree = getRotation();
+        var currentTurningDegree = getRotation().getDegrees();
 
         goalState = SwerveModuleState.optimize(goalState, Rotation2d.fromDegrees(currentTurningDegree));
 
@@ -83,11 +84,15 @@ public class SwerveModule extends SubsystemBase {
         return new double[]{driveMotorVoltage, turningMotorVoltage};
     }
 
-    public void setDesiredState(SwerveModuleState desiredState) {
+    protected void setDesiredState(SwerveModuleState desiredState) {
         var moduleState = calculateOutputVoltage(desiredState);
 
         driveMotor.setVoltage(moduleState[0]);
         turningMotor.setVoltage(moduleState[1]);
+    }
+
+    public Command setDesiredStateCommand(SwerveModuleState desiredState) {
+        return this.runOnce(() -> setDesiredState(desiredState));
     }
 
     public void stopModule() {
@@ -95,9 +100,63 @@ public class SwerveModule extends SubsystemBase {
         turningMotor.stopMotor();
     }
 
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
+    public Command stopModuleCommand() {
+        return this.runOnce(this::stopModule);
     }
 
+    public Command turnToCommand(Rotation2d angle) {
+        return new TurnToCommand(this, angle, Rotation2d.fromDegrees(1));
+    }
+
+    public Command motorRunCommand(double turningPower, double drivePower) {
+        return this.run(() -> {
+            turningMotor.set(turningPower);
+            driveMotor.set(drivePower);
+        });
+    }
+
+    private static class TurnToCommand extends Command {
+        Rotation2d targetAngle, admissibleError;
+
+        SwerveModule swerveModule;
+
+        public TurnToCommand(SwerveModule swerveModule, Rotation2d angle, Rotation2d admissibleError) {
+            this.swerveModule = swerveModule;
+            this.targetAngle = angle;
+            this.admissibleError = admissibleError;
+
+            addRequirements(this.swerveModule);
+        }
+
+        @Override
+        public void execute() {
+            swerveModule.driveMotor.stopMotor();
+
+            var turnVolt = swerveModule.rotController.calculate(
+                    swerveModule.getRotation().getDegrees(),
+                    targetAngle.getDegrees()
+            );
+
+            swerveModule.turningMotor.setVoltage(turnVolt);
+        }
+
+        @Override
+        public boolean isFinished() {
+            var errorAngle = targetAngle.minus(swerveModule.getRotation());
+
+            return Math.abs(errorAngle.getDegrees()) < admissibleError.getDegrees();
+        }
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        super.initSendable(builder);
+
+        builder.addDoubleProperty("driveDist", this::getDriveDistance, null);
+        builder.addDoubleProperty("driveRate", this::getDriveRate, null);
+        builder.addDoubleProperty("rotation", () -> getRotation().getDegrees(), null);
+
+        builder.addDoubleProperty("driveMotor", driveMotor::get, driveMotor::set);
+        builder.addDoubleProperty("turningMotor", turningMotor::get, turningMotor::set);
+    }
 }

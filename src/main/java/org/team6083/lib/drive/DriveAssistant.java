@@ -1,7 +1,7 @@
 package org.team6083.lib.drive;
 
 import org.team6083.lib.auto.GyroWalker;
-import org.team6083.lib.drive.inputs.TankInput;
+import org.team6083.lib.commands.differential.TankDriveInput;
 
 /**
  * A class for controlling the drive base with some basic assistant feature.
@@ -12,7 +12,7 @@ import org.team6083.lib.drive.inputs.TankInput;
 public class DriveAssistant {
     private GyroWalker gyroWalker;
     private DifferentialDrive drive;
-    private TankInput tankInput;
+    private TankDriveInput tankInput;
 
     private boolean headingLock = false;
     private double targetHeading = 0;
@@ -24,7 +24,7 @@ public class DriveAssistant {
      * @param differentialDrive Drive system
      * @param input             the controller that used to control the robot
      */
-    public DriveAssistant(GyroWalker gyroWalker, DifferentialDrive differentialDrive, TankInput input) {
+    public DriveAssistant(GyroWalker gyroWalker, DifferentialDrive differentialDrive, TankDriveInput input) {
         this.gyroWalker = gyroWalker;
         this.drive = differentialDrive;
         this.tankInput = input;

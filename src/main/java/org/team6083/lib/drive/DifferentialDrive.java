@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.team6083.lib.drive.inputs.TankInput;
+import org.team6083.lib.commands.differential.TankDriveInput;
 
 
 /**
@@ -195,7 +194,7 @@ public class DifferentialDrive {
      *
      * @param input A joystick to control the drive.
      */
-    public void tankDrive(TankInput input) {
+    public void tankDrive(TankDriveInput input) {
         double left = calculateTankSpeed(input, Side.kLeft);
         double right = calculateTankSpeed(input, Side.kRight);
 
@@ -216,7 +215,7 @@ public class DifferentialDrive {
         directControl(left, right);
     }
 
-    public double calculateTankSpeed(TankInput input, Side side) {
+    public double calculateTankSpeed(TankDriveInput input, Side side) {
         double speed = 0;
         double boost = 1;
         if (side == Side.kLeft) {

@@ -1,6 +1,6 @@
 package org.team6083.lib.drive.swerve;
 
-public interface DriveEncoder {
+public interface SwerveDriveEncoder {
     void reset();
 
     double getDriveDistance();

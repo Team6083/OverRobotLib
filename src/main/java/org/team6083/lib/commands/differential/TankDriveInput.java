@@ -1,9 +1,9 @@
-package org.team6083.lib.drive.inputs;
+package org.team6083.lib.commands.differential;
 
 /**
  * An interface to control the {@link org.team6083.lib.drive.DifferentialDrive} with TankDrive mode
  */
-public interface TankInput {
+public interface TankDriveInput {
     /**
      * Get left speed from stick.
      *

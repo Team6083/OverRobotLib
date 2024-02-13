@@ -1,11 +1,19 @@
-package org.team6083.lib.drive.swerve;
+package org.team6083.lib.drive;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team6083.lib.drive.DriveGyro;
+import org.team6083.lib.drive.swerve.SwerveModule;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SwerveDrive extends SubsystemBase {
 
@@ -51,8 +59,6 @@ public class SwerveDrive extends SubsystemBase {
 
         this.gyro = gyro;
 
-        resetGyro();
-
         kinematics = new SwerveDriveKinematics(
                 frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation
         );
@@ -67,8 +73,6 @@ public class SwerveDrive extends SubsystemBase {
                         backRight.getPosition()
                 }
         );
-
-        stop();
     }
 
     public Rotation2d getRotation2d() {
@@ -90,7 +94,7 @@ public class SwerveDrive extends SubsystemBase {
      *                      <p>
      *                      using the wpi function to set the speed of the swerve
      */
-    public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+    public Command driveCommand(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
         swerveModuleStates = kinematics.toSwerveModuleStates(
                 fieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getRotation2d())
@@ -99,13 +103,19 @@ public class SwerveDrive extends SubsystemBase {
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, kMaxSpeed);
 
-        frontLeft.setDesiredState(swerveModuleStates[0]);
-        frontRight.setDesiredState(swerveModuleStates[1]);
-        backLeft.setDesiredState(swerveModuleStates[2]);
-        backRight.setDesiredState(swerveModuleStates[3]);
+        var cmd = Commands.parallel(
+                frontLeft.setDesiredStateCommand(swerveModuleStates[0]),
+                frontRight.setDesiredStateCommand(swerveModuleStates[1]),
+                backLeft.setDesiredStateCommand(swerveModuleStates[2]),
+                backRight.setDesiredStateCommand(swerveModuleStates[3])
+        );
+
+        cmd.addRequirements(this);
+
+        return cmd;
     }
 
-    public void updateOdometry() {
+    protected void updateOdometry() {
         odometry.update(
                 getRotation2d(),
                 new SwerveModulePosition[]{
@@ -116,11 +126,23 @@ public class SwerveDrive extends SubsystemBase {
                 }
         );
     }
-
+    
     public void stop() {
         for (var module : swerveModules) {
             module.stopModule();
         }
+    }
+
+    public Command stopCommand() {
+        var cmd = new ParallelCommandGroup();
+
+        for (var module : swerveModules) {
+            cmd.addCommands(module.stopModuleCommand());
+        }
+
+        cmd.addRequirements(this);
+
+        return cmd;
     }
 
     public void resetGyro() {

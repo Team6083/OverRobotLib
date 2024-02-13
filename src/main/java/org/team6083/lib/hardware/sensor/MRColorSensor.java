@@ -1,4 +1,4 @@
-package org.team6083.lib.sensor;
+package org.team6083.lib.hardware.sensor;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
