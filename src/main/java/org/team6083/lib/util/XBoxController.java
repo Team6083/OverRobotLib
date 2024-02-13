@@ -14,12 +14,12 @@ public class XBoxController extends XboxController implements TankInput {
         super(port);
     }
 
-    public static final double AxisErrorRange = 0.05;
+    public static final double AxisDeadBandRange = 0.05;
 
     @Override
     public double getLeftX() {
         double v = super.getLeftX();
-        if (Math.abs(v) < AxisErrorRange) {
+        if (Math.abs(v) < AxisDeadBandRange) {
             v = 0;
         }
         return v;
@@ -28,7 +28,7 @@ public class XBoxController extends XboxController implements TankInput {
     @Override
     public double getLeftY() {
         double v = super.getLeftY();
-        if (Math.abs(v) < AxisErrorRange) {
+        if (Math.abs(v) < AxisDeadBandRange) {
             v = 0;
         }
         return v;
@@ -37,7 +37,7 @@ public class XBoxController extends XboxController implements TankInput {
     @Override
     public double getRightX() {
         double v = super.getRightX();
-        if (Math.abs(v) < AxisErrorRange) {
+        if (Math.abs(v) < AxisDeadBandRange) {
             v = 0;
         }
         return v;
@@ -46,7 +46,7 @@ public class XBoxController extends XboxController implements TankInput {
     @Override
     public double getRightY() {
         double v = super.getRightY();
-        if (Math.abs(v) < AxisErrorRange) {
+        if (Math.abs(v) < AxisDeadBandRange) {
             v = 0;
         }
         return v;
