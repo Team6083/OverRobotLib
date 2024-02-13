@@ -64,7 +64,8 @@ public class MRColorSensor implements Sendable {
 
     /**
      * Constructor of the class.
-     * @param port I2C port of the sensor
+     *
+     * @param port          I2C port of the sensor
      * @param deviceAddress I2C address of the sensor
      */
     public MRColorSensor(I2C.Port port, int deviceAddress) {
@@ -73,8 +74,9 @@ public class MRColorSensor implements Sendable {
 
     /**
      * Get the number of the color that sensor get.
-     * @see <a href="https://modernroboticsinc.com/color-sensor">https://modernroboticsinc.com/color-sensor</a>
+     *
      * @return the color number that sensor get
+     * @see <a href="https://modernroboticsinc.com/color-sensor">https://modernroboticsinc.com/color-sensor</a>
      */
     public int readColorNumber() {
         byte[] read = new byte[1];
@@ -84,37 +86,40 @@ public class MRColorSensor implements Sendable {
 
     /**
      * Get the red value.
+     *
      * @return red value that sensor currently read
      */
-    public int red(){
+    public int red() {
         byte[] read = new byte[1];
-        m_i2c.read(Register.RED.bVal,1, read);
+        m_i2c.read(Register.RED.bVal, 1, read);
         return TypeConversion.unsignedByteToInt(read[0]);
     }
 
     /**
      * Get the blue value.
+     *
      * @return blue value that sensor currently read
      */
-    public int blue(){
+    public int blue() {
         byte[] read = new byte[1];
-        m_i2c.read(Register.BLUE.bVal,1, read);
+        m_i2c.read(Register.BLUE.bVal, 1, read);
         return TypeConversion.unsignedByteToInt(read[0]);
     }
 
     /**
      * Get the green value.
+     *
      * @return green value that sensor currently read
      */
-    public int green(){
+    public int green() {
         byte[] read = new byte[1];
-        m_i2c.read(Register.GREEN.bVal,1, read);
+        m_i2c.read(Register.GREEN.bVal, 1, read);
         return TypeConversion.unsignedByteToInt(read[0]);
     }
 
-    public int alpha(){
+    public int alpha() {
         byte[] read = new byte[1];
-        m_i2c.read(Register.ALPHA.bVal,1, read);
+        m_i2c.read(Register.ALPHA.bVal, 1, read);
         return TypeConversion.unsignedByteToInt(read[0]);
     }
 

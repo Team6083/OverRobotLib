@@ -7,7 +7,7 @@ public class DashboardFeeder {
     private SensorHub sensorHub;
     private AutoEngineBase autoEngineBase;
 
-    public DashboardFeeder(){
+    public DashboardFeeder() {
 
     }
 }

@@ -10,7 +10,7 @@ public class RobotPower {
     private int devicePort;
 
     public static void init(int pdp_CANId) {
-        if(!inited) {
+        if (!inited) {
             PDP_CANID = pdp_CANId;
             pdp = new PowerDistribution(PDP_CANID, PowerDistribution.ModuleType.kCTRE);
         }
