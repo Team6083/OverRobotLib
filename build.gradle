@@ -9,6 +9,7 @@ plugins {
     id 'java-library'
     id 'edu.wpi.first.GradleRIO' version '2024.2.1'
     id 'signing'
+    id 'maven-publish'
 }
 
 dependencies {
