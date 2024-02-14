@@ -9,6 +9,7 @@ plugins {
     id 'java-library'
     id 'edu.wpi.first.GradleRIO' version '2024.2.1'
     id 'signing'
+    id 'maven-publish'
 }
 
 dependencies {
@@ -24,21 +25,21 @@ repositories {
 
 
 group = 'io.github.team6083'
-version = '2024.1.1-SNAPSHOT'
+version = '2024.2.1-1-SNAPSHOT'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
-//
-//publishing {
-//    repositories {
-//        maven {
-//            name = 'GitHubPackages'
-//            url = uri('https://maven.pkg.github.com/team6083/overrobotlib')
-//            credentials {
-//                username = project.findProperty('gpr.user') ?: System.getenv('USERNAME')
-//                password = project.findProperty('gpr.key') ?: System.getenv('TOKEN')
-//            }
-//        }
-//
+
+publishing {
+    repositories {
+        maven {
+            name = 'GitHubPackages'
+            url = uri('https://maven.pkg.github.com/team6083/overrobotlib')
+            credentials {
+                username = project.findProperty('gpr.user') ?: System.getenv('USERNAME')
+                password = project.findProperty('gpr.key') ?: System.getenv('TOKEN')
+            }
+        }
+
 //        maven {
 //            name = 'ossrh'
 //            def releaseRepo = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
@@ -49,44 +50,43 @@ ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 //                password = project.findProperty('ossrh.password') ?: System.getenv('OSSRH_PASSWORD')
 //            }
 //        }
-//    }
-//
-//    publications {
-//        gpr(MavenPublication) {
-//            from(components.java)
-//        }
-//
-//        mavenJava(MavenPublication) {
-//            pom {
-//                name = 'OverRobotLib'
-//                description = 'A robot library for FRC Team.'
-//                url = 'https://github.com/Team6083/OverRobotLib'
-//
-//                licenses {
-//                    license {
-//                        name = 'MIT License'
-//                        url = 'https://opensource.org/licenses/MIT'
-//                    }
-//                }
-//
-//                developers {
-//                    developer {
-//                        id = 'team6083'
-//                        name = 'Team6083'
-//                        email = 'frc2016@my.cmsh.cyc.edu.tw'
-//                    }
-//                }
-//
-//                scm {
-//                    connection = 'scm:git:git://github.com/Team6083/OverRobotLib.git'
-//                    developerConnection = 'scm:git:https://github.com/Team6083/OverRobotLib'
-//                    url = 'https://github.com/Team6083/OverRobotLib'
-//                }
-//            }
-//        }
-//    }
-//}
-//
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+
+            from(components.java)
+
+            pom {
+                name = 'OverRobotLib'
+                description = 'A robot library for FRC Team.'
+                url = 'https://github.com/Team6083/OverRobotLib'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'team6083'
+                        name = 'Team6083'
+                        email = 'frc2016@my.cmsh.cyc.edu.tw'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/Team6083/OverRobotLib.git'
+                    developerConnection = 'scm:git:https://github.com/Team6083/OverRobotLib'
+                    url = 'https://github.com/Team6083/OverRobotLib'
+                }
+            }
+        }
+    }
+}
+
 //signing {
 //    required { isReleaseVersion }
 //
