@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -126,7 +127,7 @@ public class SwerveDrive extends SubsystemBase {
                 }
         );
     }
-    
+
     public void stop() {
         for (var module : swerveModules) {
             module.stopModule();
@@ -152,5 +153,14 @@ public class SwerveDrive extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        super.initSendable(builder);
+
+        builder.addDoubleProperty("poseX", () -> getPose2d().getX(), null);
+        builder.addDoubleProperty("poseY", () -> getPose2d().getY(), null);
+        builder.addDoubleProperty("poseDeg", () -> getPose2d().getRotation().getDegrees(), null);
     }
 }
