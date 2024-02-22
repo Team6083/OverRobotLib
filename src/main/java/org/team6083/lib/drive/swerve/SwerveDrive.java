@@ -10,11 +10,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.team6083.lib.drive.DriveGyro;
-import org.team6083.lib.drive.swerve.SwerveModule;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class SwerveDrive extends SubsystemBase {
 
