@@ -11,14 +11,12 @@ public class NavXMXP extends com.kauailabs.navx.frc.AHRS implements DriveGyro {
 
     @Override
     public double getHeading() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHeading'");
+        super.getHeading();
     }
 
     @Override
     public void reset() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reset'");
+        super.reset();
     }
 
 }

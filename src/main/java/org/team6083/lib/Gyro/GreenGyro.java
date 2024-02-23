@@ -9,14 +9,12 @@ public class GreenGyro extends edu.wpi.first.wpilibj.ADXRS450_Gyro implements Dr
 
     @Override
     public double getHeading() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHeading'");
+        super.getHeading();
     }
 
     @Override
     public void reset() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reset'");
+        super.reset();
     }
     
 }
