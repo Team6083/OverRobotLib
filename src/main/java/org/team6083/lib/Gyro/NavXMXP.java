@@ -1,7 +1,5 @@
 package org.team6083.lib.Gyro;
 
-import org.team6083.lib.drive.DriveGyro;
-
 import edu.wpi.first.wpilibj.SPI.Port;
 
 public class NavXMXP extends com.kauailabs.navx.frc.AHRS implements DriveGyro {
@@ -11,7 +9,7 @@ public class NavXMXP extends com.kauailabs.navx.frc.AHRS implements DriveGyro {
 
     @Override
     public double getHeading() {
-        super.getHeading();
+        return super.getAngle();
     }
 
     @Override

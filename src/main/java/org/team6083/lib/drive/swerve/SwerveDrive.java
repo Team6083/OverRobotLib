@@ -1,5 +1,7 @@
 package org.team6083.lib.drive.swerve;
 
+import org.team6083.lib.Gyro.DriveGyro;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -9,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.team6083.lib.drive.DriveGyro;
 
 public class SwerveDrive extends SubsystemBase {
 
