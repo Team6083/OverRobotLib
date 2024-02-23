@@ -1,5 +1,5 @@
-public class VictorSP extends VictorSP implements Motor{
-    public VictorSP(deviceId){
+public class VictorSP extends edu.wpi.first.wpilibj.VictorSP implements Motor{
+    public VictorSP(int deviceId){
         super(deviceId);
     }
     @Override
