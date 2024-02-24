@@ -10,23 +10,21 @@ public class RobotCANcoder extends com.ctre.phoenix6.hardware.CANcode implements
 
     @Override
     public void reset() {
-        super.reset();
+        super.setPosition(0);
     }
 
     @Override
     public double getDriveDisance() {
-        super.get
+        super.getDriveDistance();
     }
 
     @Override
     public double getDriveRate() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDriveRate'");
+        return super.getDriveRate();
     }
 
     @Override
     public Rotation2d getAbsRotation() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAbsRotation'");
+        return super.getAbsolutePosition().getValue() * 360.0;
     }
 }
