@@ -1,23 +1,21 @@
 package org.team6083.lib.Encoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-
-public class SPXMagEncoder extends implements RobotEncoder{
-    public SPXMagEncoder(){
-        super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);;
-
+import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+public class RobotCANcoder extends com.ctre.phoenix6.hardware.CANcode implements RobotEncoder{
+    public RobotCANcoder(int Channel){
+        super(Channel);
     }
-    
+
     @Override
     public void reset() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reset'");
+        super.reset();
     }
 
     @Override
     public double getDriveDisance() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDriveDisance'");
+        super.get
     }
 
     @Override
@@ -31,5 +29,4 @@ public class SPXMagEncoder extends implements RobotEncoder{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAbsRotation'");
     }
-    
 }
