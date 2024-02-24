@@ -1,4 +1,4 @@
-package org.team6083.lib.Gyro;
+package org.team6083.lib.gyro;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 

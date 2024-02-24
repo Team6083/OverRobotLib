@@ -1,6 +1,7 @@
-package org.team6083.lib.Motor;
+package org.team6083.lib.motor;
 
-public class SparkMax extends CANSparkMax implements Motor{
+import com.revrobotics.CANSparkMax;
+public class SparkMax extends com.revrobotics.CANSparkMax implements Motor{
     public SparkMax(int deviceId,String motortype){
         super(deviceId,motortype);
     }

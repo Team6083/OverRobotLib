@@ -1,4 +1,4 @@
-package org.team6083.lib.Motor;
+package org.team6083.lib.motor;
 
 public interface Motor {
     void set(double speed);

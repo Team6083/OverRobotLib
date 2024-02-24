@@ -1,9 +1,7 @@
-package org.team6083.lib.Motor;
+package org.team6083.lib.motor;
 
-import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
-import edu.wpi.first.wpilibj.motorcontrol.Victor;
 
-public class MotorVictorSPX extends WPI_VictorSPX implements Motor{
+public class MotorVictorSPX extends com.ctre.phoenix.motorcontrol.can.VictorSPX implements Motor{
     public MotorVictorSPX(int deviceId){
         super(deviceId);
     }
