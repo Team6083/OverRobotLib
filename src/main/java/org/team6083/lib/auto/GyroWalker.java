@@ -1,7 +1,8 @@
 package org.team6083.lib.auto;
 
+import org.team6083.lib.gyro.DriveGyro;
+
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 
 /**
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  * @since 0.1.0-alpha
  */
 public class GyroWalker {
-    private Gyro gyro;
+    private DriveGyro gyro;
     private PIDController pidController;
 
     private double currentSourceAngle, currentAngle;
@@ -28,7 +29,7 @@ public class GyroWalker {
      *
      * @param gyro the gyroscope that used to correction the heading
      */
-    public GyroWalker(Gyro gyro) {
+    public GyroWalker(DriveGyro gyro) {
         this.gyro = gyro;
         leftPower = 0;
         rightPower = 0;
@@ -45,7 +46,7 @@ public class GyroWalker {
      * @param rightSetPower original power of right
      */
     public void calculate(double leftSetPower, double rightSetPower) {
-        currentSourceAngle = gyro.getAngle();
+        currentSourceAngle = gyro.getHeading();
         currentAngle = useTranslateAngle ? translateAngle(currentSourceAngle) : currentSourceAngle;
 
         double angle = currentAngle;

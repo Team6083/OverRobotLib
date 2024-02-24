@@ -1,5 +1,7 @@
 package org.team6083.lib.drive.swerve;
 
+import org.team6083.lib.Encoder.RobotEncoder;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -16,15 +18,15 @@ public class SwerveModule extends SubsystemBase {
 
     protected final MotorController driveMotor;
     protected final MotorController turningMotor;
-    protected final TurningEncoder turningEncoder;
-    protected final DriveEncoder driveEncoder;
+    protected final RobotEncoder turningEncoder;
+    protected final RobotEncoder driveEncoder;
     protected final PIDController rotController;
 
     protected final double kDesireSpeedToMotorVoltage;
 
     public SwerveModule(
             MotorController driveMotor, MotorController turningMotor,
-            DriveEncoder driveEncoder, TurningEncoder turningEncoder,
+            RobotEncoder driveEncoder, RobotEncoder turningEncoder,
             double kPRot, double kIRot, double kDRot,
             double kDesireSpeedToMotorVoltage
     ) {

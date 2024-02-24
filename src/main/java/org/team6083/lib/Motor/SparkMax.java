@@ -1,17 +1,42 @@
 package org.team6083.lib.motor;
 
-import com.revrobotics.CANSparkMax;
-public class SparkMax extends com.revrobotics.CANSparkMax implements Motor{
-    public SparkMax(int deviceId,String motortype){
-        super(deviceId,motortype);
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
+public class SparkMax extends com.revrobotics.CANSparkMax implements MotorController{
+    public SparkMax(int deviceId){
+        super(deviceId, MotorType.kBrushless);
     }
-    
-    @Override 
-    public void set(double speed){
-        super.set(speed);
-    }
+
     @Override
-    public void stop(){
-        super.set(0);
+    public double get() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'get'");
+    }
+
+    @Override
+    public void setInverted(boolean isInverted) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setInverted'");
+    }
+
+    @Override
+    public boolean getInverted() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getInverted'");
+    }
+
+    @Override
+    public void disable() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'disable'");
+    }
+
+    @Override
+    public void stopMotor() {
+    }
+
+    @Override
+    public void set(double speed) {
     }
 }

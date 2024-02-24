@@ -131,8 +131,6 @@ public class DifferentialDrive {
             m_stopTime = Timer.getFPGATimestamp() + m_expiration;
         }
     }
-    // delete to here
-
 
     protected double applyDeadband(double value, double deadband) {
         if (Math.abs(value) > deadband) {
