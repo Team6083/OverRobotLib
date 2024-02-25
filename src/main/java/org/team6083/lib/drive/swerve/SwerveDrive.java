@@ -1,6 +1,6 @@
 package org.team6083.lib.drive.swerve;
 
-import org.team6083.lib.gyro.DriveGyro;
+import org.team6083.lib.Gyro.DriveGyro;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;

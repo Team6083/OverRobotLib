@@ -1,6 +1,6 @@
 package org.team6083.lib.auto;
 
-import org.team6083.lib.gyro.DriveGyro;
+import org.team6083.lib.Gyro.DriveGyro;
 
 import edu.wpi.first.math.controller.PIDController;
 

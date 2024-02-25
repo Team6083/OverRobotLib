@@ -1,4 +1,4 @@
-package org.team6083.lib.motor;
+package org.team6083.lib.Motor;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 

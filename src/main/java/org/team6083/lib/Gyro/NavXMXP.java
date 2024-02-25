@@ -1,4 +1,4 @@
-package org.team6083.lib.gyro;
+package org.team6083.lib.Gyro;
 
 import edu.wpi.first.wpilibj.SPI.Port;
 
