@@ -1,4 +1,4 @@
-package org.team6083.lib.Motor;
+package org.team6083.lib.motor;
 
 public class MotorVictorSP extends edu.wpi.first.wpilibj.motorcontrol.VictorSP{
     public MotorVictorSP(int deviceId){

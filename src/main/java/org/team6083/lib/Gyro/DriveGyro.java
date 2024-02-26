@@ -1,4 +1,4 @@
-package org.team6083.lib.Gyro;
+package org.team6083.lib.gyro;
 
 public interface DriveGyro {
     double getHeading();

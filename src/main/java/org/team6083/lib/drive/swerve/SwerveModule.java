@@ -2,6 +2,8 @@ package org.team6083.lib.drive.swerve;
 
 import org.team6083.lib.Encoder.RobotEncoder;
 
+import com.ctre.phoenix6.StatusSignal;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -46,7 +48,7 @@ public class SwerveModule extends SubsystemBase {
 
     // to get the drive distance
     public double getDriveDistance() {
-        return driveEncoder.getDriveDisance();
+        return driveEncoder.getDriveDisanceDouble();
     }
 
     // calculate the rate of the drive

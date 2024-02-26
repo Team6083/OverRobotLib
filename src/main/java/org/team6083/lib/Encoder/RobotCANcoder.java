@@ -1,10 +1,10 @@
 package org.team6083.lib.Encoder;
 
+
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-public class RobotCANcoder extends com.ctre.phoenix6.hardware.CANcode implements RobotEncoder{
-    public RobotCANcoder(int Channel){
+
+public class RobotCANcoder extends com.ctre.phoenix6.hardware.CANcoder implements RobotEncoder {
+    public RobotCANcoder(int Channel) {
         super(Channel);
     }
 
@@ -14,17 +14,18 @@ public class RobotCANcoder extends com.ctre.phoenix6.hardware.CANcode implements
     }
 
     @Override
-    public double getDriveDisance() {
-        super.getDriveDistance();
-    }
-
-    @Override
     public double getDriveRate() {
-        return super.getDriveRate();
+        return super.getPosition().getValueAsDouble();
     }
 
     @Override
     public Rotation2d getAbsRotation() {
-        return super.getAbsolutePosition().getValue() * 360.0;
+        return new Rotation2d(super.getAbsolutePosition().getValue() * 360.0);
+    }
+
+
+    @Override
+    public double getDriveDisanceDouble() {
+        return super.getPosition().getValueAsDouble();
     }
 }

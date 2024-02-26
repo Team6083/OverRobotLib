@@ -1,4 +1,4 @@
-package org.team6083.lib.Motor;
+package org.team6083.lib.motor;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
