@@ -48,7 +48,7 @@ public class SwerveModule extends SubsystemBase {
 
     // to get the drive distance
     public double getDriveDistance() {
-        return driveEncoder.getDriveDisanceDouble();
+        return driveEncoder.getDriveDistanceDouble();
     }
 
     // calculate the rate of the drive

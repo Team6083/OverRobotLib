@@ -1,7 +1,5 @@
 package org.team6083.lib.Encoder;
 
-import com.ctre.phoenix6.StatusSignal;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 
 public class NormalEncoder extends edu.wpi.first.wpilibj.Encoder implements RobotEncoder{
@@ -17,7 +15,7 @@ public class NormalEncoder extends edu.wpi.first.wpilibj.Encoder implements Robo
     }
 
     @Override
-    public double getDriveDisanceDouble() {
+    public double getDriveDistanceDouble() {
         return super.getDistance();
     }
 

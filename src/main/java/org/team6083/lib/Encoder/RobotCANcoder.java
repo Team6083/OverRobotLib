@@ -25,7 +25,7 @@ public class RobotCANcoder extends com.ctre.phoenix6.hardware.CANcoder implement
 
 
     @Override
-    public double getDriveDisanceDouble() {
+    public double getDriveDistanceDouble() {
         return super.getPosition().getValueAsDouble();
     }
 }
