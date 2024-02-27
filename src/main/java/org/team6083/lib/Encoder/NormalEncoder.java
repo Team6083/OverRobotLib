@@ -1,4 +1,4 @@
-package org.team6083.lib.Encoder;
+package org.team6083.lib.encoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 

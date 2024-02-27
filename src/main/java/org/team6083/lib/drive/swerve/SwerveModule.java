@@ -1,6 +1,6 @@
 package org.team6083.lib.drive.swerve;
 
-import org.team6083.lib.Encoder.RobotEncoder;
+import org.team6083.lib.encoder.RobotEncoder;
 
 import com.ctre.phoenix6.StatusSignal;
 
