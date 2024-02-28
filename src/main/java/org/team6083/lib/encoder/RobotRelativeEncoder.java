@@ -1,37 +1,37 @@
 package org.team6083.lib.encoder;
 
-import org.team6083.lib.motor.BoboMotorSparkMax;
+import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
-public class RobotRelativeEncoder implements com.revrobotics.RelativeEncoder, RobotEncoder {
+public class RobotRelativeEncoder implements RobotEncoder {
     
     private final double offsetPosition = 0;
     private final double encoderPerPulse = 2048.0;
-
-    public RobotRelativeEncoder(){
-        super();
+    private final RelativeEncoder relativeEncoder;
+    public RobotRelativeEncoder(RelativeEncoder relativeEncoder){
+        this.relativeEncoder = relativeEncoder;
     }
     @Override
     public void reset() {
-        super.setPosition(0);
+        relativeEncoder.setPosition(0);
     }
 
     @Override
     public double getDriveDistanceDouble() {
-        return super.getPositon();
+        return relativeEncoder.getPosition();
     }
 
     @Override
     public double getDriveRate() {
-        return super.getPosition();
+        return relativeEncoder.getPosition();
     }
 
     @Override
     public Rotation2d getAbsRotation() {
-       return Rotation2d.fromDegrees((super.getPosition()+offsetPosition)%encoderPerPulse);
+       return Rotation2d.fromDegrees((relativeEncoder.getPosition()+offsetPosition)%encoderPerPulse);
     }
-
+    
     
 }
 
