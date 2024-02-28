@@ -25,7 +25,7 @@ repositories {
 
 
 group = 'io.github.team6083'
-version = '2024.2.1-1-SNAPSHOT'
+version = '2024.2.1-kenn1-SNAPSHOT'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 

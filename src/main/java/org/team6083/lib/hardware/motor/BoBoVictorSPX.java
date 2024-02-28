@@ -10,7 +10,12 @@ import java.util.function.Supplier;
 
 public class BoBoVictorSPX extends VictorSPX implements CurrentLimit, MotorController {
     protected final Supplier<Double> motorCurrentSupplier;
-    protected double currentLimit;
+    protected double currentLimit = -1;
+
+    public BoBoVictorSPX(int deviceNumber) {
+        super(deviceNumber);
+        this.motorCurrentSupplier = null;
+    }
 
     public BoBoVictorSPX(int deviceNumber, Supplier<Double> motorCurrentSupplier) {
         super(deviceNumber);
@@ -29,7 +34,7 @@ public class BoBoVictorSPX extends VictorSPX implements CurrentLimit, MotorContr
 
     @Override
     public void set(VictorSPXControlMode mode, double demand0, DemandType demand1Type, double demand1) {
-        if (motorCurrentSupplier.get() >= currentLimit) {
+        if (motorCurrentSupplier != null && currentLimit >= 0 && motorCurrentSupplier.get() >= currentLimit) {
             stopMotor();
         } else {
             super.set(mode, demand0, demand1Type, demand1);
