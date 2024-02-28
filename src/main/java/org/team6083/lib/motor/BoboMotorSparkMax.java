@@ -3,8 +3,8 @@ package org.team6083.lib.motor;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-public class MotorSparkMax extends com.revrobotics.CANSparkMax implements MotorController{
-    public MotorSparkMax(int deviceId){
+public class BoboMotorSparkMax extends com.revrobotics.CANSparkMax implements MotorController{
+    public BoboMotorSparkMax(int deviceId){
         super(deviceId, MotorType.kBrushless);
     }
 

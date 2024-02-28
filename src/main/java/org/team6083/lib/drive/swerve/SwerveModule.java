@@ -2,8 +2,6 @@ package org.team6083.lib.drive.swerve;
 
 import org.team6083.lib.encoder.RobotEncoder;
 
-import com.ctre.phoenix6.StatusSignal;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
