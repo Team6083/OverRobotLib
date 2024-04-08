@@ -3,7 +3,6 @@ package org.team6083.lib.drive;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.CAN;
 import org.team6083.lib.drive.swerve.SwerveDriveEncoder;
 import org.team6083.lib.hardware.motor.CANSparkMaxBuilder;
 import org.team6083.lib.hardware.sensor.CANCoder;
@@ -24,24 +23,30 @@ public class NEO_SDS_ServeDriveBuilder extends SwerveDriveBuilder {
         turningInverted = new HashMap<>();
     }
 
-    public void setDriveMotorIDs(int[] driveMotorIDs) {
+    public NEO_SDS_ServeDriveBuilder setDriveMotorIDs(int... driveMotorIDs) {
         driveIDs = driveMotorIDs;
+
+        return this;
     }
 
-    public void setDriveMotorInverted(int idx, boolean inverted) {
+    public NEO_SDS_ServeDriveBuilder setDriveMotorInverted(int idx, boolean inverted) {
         driveInverted.put(idx, inverted);
+        return this;
     }
 
-    public void setTurningMotorIDs(int[] turningMotorIDs) {
+    public NEO_SDS_ServeDriveBuilder setTurningMotorIDs(int... turningMotorIDs) {
         turningIDs = turningMotorIDs;
+        return this;
     }
 
-    public void setTurningMotorInverted(int idx, boolean inverted) {
+    public NEO_SDS_ServeDriveBuilder setTurningMotorInverted(int idx, boolean inverted) {
         turningInverted.put(idx, inverted);
+        return this;
     }
 
-    public void setCANCoderIDs(int[] CANCoderIDs) {
+    public NEO_SDS_ServeDriveBuilder setCANCoderIDs(int... CANCoderIDs) {
         this.CANCoderIDs = CANCoderIDs;
+        return this;
     }
 
     @Override

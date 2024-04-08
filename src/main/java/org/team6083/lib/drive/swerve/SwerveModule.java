@@ -92,7 +92,7 @@ public class SwerveModule extends SubsystemBase {
     }
 
     public Command setDesiredStateCommand(SwerveModuleState desiredState) {
-        return this.runOnce(() -> setDesiredState(desiredState));
+        return this.runOnce(() -> setDesiredState(desiredState)).withName("SetDesiredStateCommand");
     }
 
     public void stopModule() {
