@@ -1,4 +1,4 @@
-package org.team6083.distanceSensor;
+package org.team6083.lib.distanceSensor;
 
 public interface DistanceSensorInterface {
     public double getTargetDistance();

@@ -1,4 +1,4 @@
-package org.team6083.distanceSensor;
+package org.team6083.lib.distanceSensor;
 
 import com.revrobotics.Rev2mDistanceSensor;
 
