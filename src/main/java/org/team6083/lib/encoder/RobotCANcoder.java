@@ -28,4 +28,5 @@ public class RobotCANcoder extends com.ctre.phoenix6.hardware.CANcoder implement
     public double getDriveDistanceDouble() {
         return super.getPosition().getValueAsDouble();
     }
+
 }
